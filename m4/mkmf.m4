@@ -1,7 +1,11 @@
 dnl ###
-dnl ### NSC 2.0 -- Makefile Builder
-dnl ### (c) 1997 Martin Mares <mj@gts.cz>
+dnl ### NSC 2.2 -- Makefile Builder
+dnl ### (c) 1997--1999 Martin Mares <mj@ucw.cz>
 dnl ###
+
+# Things we allow to override
+
+define(`named_restart_cmd', `ndc reload')
 
 # List of all version files available
 
@@ -46,9 +50,7 @@ divert(-1)')
 # Last words
 
 define(`cleanup', `divert(0)VERSDIR/.version: ALLVERS
-#	-killall named
-#	named
-	ndc reload
+	named_restart_cmd
 	touch VERSDIR/.version
 
 clean:
