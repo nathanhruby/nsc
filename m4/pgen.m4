@@ -1,6 +1,6 @@
 dnl ###
-dnl ### NSC 2.0 -- Partial Reverse Delegation Generator
-dnl ### (c) 1997 Martin Mares <mj@gts.cz>
+dnl ### NSC 2.2 -- Partial Reverse Delegation Generator
+dnl ### (c) 1997--1999 Martin Mares <mj@ucw.cz>
 dnl ###
 dnl ### Usage: m4 nsc.m4 >zone-file -DBASE=domain -DFROM=first-addr -DCOUNT=count -DSERV=primary-server
 dnl ###

@@ -1,6 +1,6 @@
 dnl ###
-dnl ### NSC 2.0 -- BIND Config File Builder
-dnl ### (c) 1997 Martin Mares <mj@gts.cz>
+dnl ### NSC 2.2 -- BIND Config File Builder
+dnl ### (c) 1997--1999 Martin Mares <mj@ucw.cz>
 dnl ###
 
 # Definition of primary domain
