@@ -190,3 +190,8 @@ chkdom		Checks domains for correctness using the 'host' utility
 convert		A simple perl script for conversion of zone files to NSC
 		domain files. Requires the DNS module (available from CPAN at
 		ftp.cpan.org).
+
+chkdel		A simple perl script for checking of domain delegations --
+		it checks all PRIMARY and SECONDARY records in cf/domains
+		against NS records. Requires the DNS Perl module and also
+		some tweaking of parameters at the top of the script.

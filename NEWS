@@ -6,3 +6,4 @@ Version 2.2  [11-09-1999]
   o  Added `convert' script for easy conversion of zone files to NSC
      domain files.
   o  Serial numbers are now Y2K clean.
+  o  Added `chkdel' script for checking of zone delegations.

@@ -1,0 +1,63 @@
+#!/usr/bin/perl -w
+#
+#	ChkDel -- A simple script for checking of domain delegations
+#
+#	(c) 1999 Martin Mares <mj@ucw.cz>
+#
+
+use lib "/home/mj/perl/lib/site_perl";
+
+$our_server = "server1.gts.cz";
+$outside_ns = "ns.eunet.cz";
+
+use Net::DNS::Resolver;
+
+$res = new Net::DNS::Resolver;
+$res->nameservers($outside_ns);
+$res->defnames(0);
+$res->dnsrch(0);
+$res->debug(0);
+$res->recurse(1);
+
+@list = @ARGV ? `cat $ARGV[0]` : `m4 cf/domains`;
+
+foreach $_ (@list) {
+	if (/^PRIMARY\((\S+)\)/) { $dom = $1; }
+	elsif (/^SECONDARY\((\S+)\s*,/) { $dom = $1; }
+	else { next; }
+	$dom eq "localhost" && next;
+#	print "$dom\n";
+	my $q = $res->send($dom, "NS", "IN") or do {
+		print "$dom: ", $res->errorstring, "\n";
+		next;
+	};
+	my $hdr = $q->header;
+	$hdr->tc and do {
+		print "$dom: Truncated response\n";
+		next;
+	};
+	my $rc = $hdr->rcode;
+	$rc eq "NXDOMAIN" and do {
+		print "$dom: Doesn't exist\n";
+		next;
+	};
+	$rc eq "NOERROR" or do {
+		print "$dom: Error $rc\n";
+		next;
+	};
+	$hdr->ancount or do {
+		print "$dom: Empty answer\n";
+		next;
+	};
+	$f = 0;
+	foreach my $r ($q->answer) {
+		if ($r->class eq "IN" && $r->type eq "NS" && $r->nsdname eq $our_server) {
+			$f = 1;
+			last;
+		}
+	}
+	$f or do {
+		print "$dom: Lame delegation\n";
+		next;
+	};
+}
