@@ -1,40 +1,75 @@
-; Name server domain file for ucw.cz by MJ
+; Domain file for ucw.cz by MJ
 
-; 62.168.0.0 [8]	Local arcnet
-; 62.168.0.8 [4]	PTP link to GTS
-; 62.168.0.12 [4]	PTP LL link to GTS
-; 62.168.0.16 [4]	PTP link to Alcyone
+define(`jabip', `81.31.5.130')
+define(`ucwmx', `0 jabberwock')
 
-define(`ucwmx', `50 atrey.karlin.mff.cuni.cz, 60 k332.feld.cvut.cz, 100 server1.gts.cz, 110 server2.gts.cz')
-define(`MJNET', `62.168.0')
+define(`minttl', 300)
 
 SOA(ucw.cz)
-NS(server1.gts.cz,hubserv.gts.cz)
+NS(jabberwock.ucw.cz,drak.ucw.cz,ns.parcon.cz)
+MX(ucwmx, 10 drak)
+DADDR(jabip)
+
+; Jabberwock, connected to CECOM
+H(jabberwock, jabip)
+MX(ucwmx)
+ALIAS(lariat,www,ftp,vrr,cvs)
+
+H(jabberwock6, 2001:ae8::248:54ff:fe64:60b1)
+
+; MJ's home network
+H(albireo, 81.27.194.19)
 MX(ucwmx)
 
-H(albireo, MJNET.14, MJNET.1)
+the.name.of.my.computer.is.longer.than.the.name.of.your.computers.isnt.it	`CNAME'	albireo
+
+; Pavel <pavel@ucw.cz>
+H(elf)
 MX(ucwmx)
 
-H(toaster, MJNET.3)
+H(bug)
+MX(ucwmx)
 
-H(alcyone-gw, MJNET.17)
-H(alcyone, MJNET.18)
+; Dan <0rfelyus@ucw.cz>
+H(hobitin)
+MX(ucwmx)
+CNAME(stopari, jabberwock)
 
-H(ucw-cb, MJNET.9)
-H(albireo-cb, MJNET.10)
+; Vojta <vojtech@ucw.cz>
+H(twilight, 81.30.235.3)
+MX(0 twilight.ucw.cz, 10 twilight-upc.ucw.cz, 100 jabberwock.ucw.cz)
 
-H(albireo-eth0, MJNET.21)
-H(abacus, MJNET.22)
+H(twilight-upc, 62.245.75.237)
 
-H(ucw-gw, MJNET.13)
+DH(m-v, jabip)
+MX(ucwmx)
+ALIAS(www.m-v)
 
-HH(elf)
-MX(5 atrey.karlin.mff.cuni.cz, 100 server1.gts.cz, 110 server2.gts.cz)
+DH(lakarie, jabip)
+MX(ucwmx)
 
-HH(bug)
-MX(5 atrey.karlin.mff.cuni.cz, 100 server1.gts.cz, 110 server2.gts.cz)
+; Erik Hamera <hamerae@cs.felk.cvut.cz>
+H(kanal, 62.24.67.123)
+MX(0 kanal)
+H(mamutik, 62.24.67.72)
 
-HH(twilight)
-MX(5 atrey.karlin.mff.cuni.cz, 100 server1.gts.cz, 110 server2.gts.cz)
+; Johanka <johanka@ucw.cz>
+H(arc, 195.39.17.251)
 
-the.name.of.my.computer.is.longer.than.any.name.of.a.computer.you.might.possibly.have	CNAME	mouse.gts.cz.
+; Mafi <mafi@ucw.cz>
+CNAME(mafi, ns1.foo.cz)
+
+; Drak <goran@ucw.cz>
+; (we're a secondary for Drak, so glue record is not needed)
+dnl H(drak, 212.71.128.78)
+H(drak)
+NS(drak.ucw.cz)
+NS(jabberwock.ucw.cz)
+
+; Spam Trap
+H(uu)
+MX(ucwmx)
+
+; Mail Extension Mapper
+H(x)
+MX(ucwmx)

@@ -1,15 +1,27 @@
 # Domain table for NSC at UCW
 
-OPTIONS()
-
 # Various mandatory things
 PRIMARY(localhost)
-REVERSE(0, localhost)
-REVERSE(255, localhost)
+REVERSE(0)
+REVERSE(255)
 REVERSE(127.0.0, localhost)
 
 PRIMARY(ucw.cz)
+REVERSE(81.31.5, ucw.cz)
+REVERSE(2001:ae8::/64, ucw.cz)
+PRIMARY(slady.cz)
+PRIMARY(slady.net)
+PRIMARY(pdesign.cz)
+PRIMARY(martin.mares.name)
 
-SECONDARY(sinus.cz, 194.213.32.2)
-
-REVERSE(62.168.0, ucw.cz)
+SECONDARY(werewolf.cz,194.108.93.231)
+SECONDARY(mks.cz,212.71.128.78)
+SECONDARY(resla.cz,212.71.128.78)
+SECONDARY(sebald-flex.cz,212.71.128.78)
+SECONDARY(bepof.cz,212.71.128.78)
+SECONDARY(cheb.cz,212.71.128.78)
+SECONDARY(alumexgroup.cz,212.71.128.78)
+SECONDARY(egraphics.cz,212.71.128.78)
+SECONDARY(chytej.cz,212.71.128.78)
+SECONDARY(drak.ucw.cz,212.71.128.78)
+SECONDARY(e-redakce.cz,212.71.128.78)
