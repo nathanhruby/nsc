@@ -10,8 +10,8 @@ use lib "/home/mj/perl/lib/site_perl";
 use Getopt::Std;
 use Net::DNS::Resolver;
 
-getopts('v', \%opts) && @ARGV == 1 || do {
-	print "Usage: convert [-v] <domain>\n";
+getopts('v', \%opts) && @ARGV == 2 || do {
+	print "Usage: convert [-v] <domain> <server>\n";
 	exit 1;
 };
 $domain = norm_name($ARGV[0]);
@@ -19,12 +19,13 @@ $domain = norm_name($ARGV[0]);
 $verbose = $opts{"v"};
 
 $res = new Net::DNS::Resolver;
+$res->nameservers($ARGV[1]);
 $res->defnames(0);
 $res->dnsrch(0);
 $res->debug(0);
 
 $verbose && print "; Fetching zone data for $domain\n";
-@zone = $res->axfr($domain) or failed("Zone transfer failed");
+@zone = $res->axfr($domain) or die("Zone transfer failed");
 foreach $r (@zone) {
 	if ($verbose) {
 		$name = $r->string;
