@@ -2,12 +2,14 @@
 
 OPTIONS()
 
-PRIMARY(ucw.cz)
-
-SECONDARY(sinus.cz, 194.213.33.1)
-
+# Various mandatory things
+PRIMARY(localhost)
 REVERSE(0, localhost)
 REVERSE(255, localhost)
 REVERSE(127.0.0, localhost)
+
+PRIMARY(ucw.cz)
+
+SECONDARY(sinus.cz, 194.213.32.2)
 
 REVERSE(62.168.0, ucw.cz)

@@ -1,5 +1,11 @@
-; Special pseudo-domain for localhost
+; From this domain file we generate all the mandatory records specified
+; in RFC 1912, section 4.1:
+;	1)  Localhost zone containing `localhost A 127.0.0.1'
+;	2)  0.0.127.in-addr.arpa with `1.0 PTR localhost.'
+;	3)  empty 255.in-addr.arpa
+;	4)  empty 0.in-addr.arpa
 
-SOA()
+SOA(localhost)
 NS(nsname)
-H(localhost,127.0.0.1)
+RH(localhost.,127.0.0.1)
+localhost.	A	127.0.0.1
