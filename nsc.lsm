@@ -1,14 +1,14 @@
 Begin3
 Title:          Name Server Configurator
-Version:        2.1
-Entered-date:   981102
+Version:        2.2
+Entered-date:   990910
 Description:    Set of utilities and M4 scripts for easy maintenance of
 		DNS server configuration and zone files. Requires GNU m4
 		and BIND version 8.X or newer.
 Keywords:       named, bind, dns
-Author:         mj@atrey.karlin.mff.cuni.cz (Martin Mares)
-Maintained-by:  mj@atrey.karlin.mff.cuni.cz (Martin Mares)
-Primary-site:   atrey.karlin.mff.cuni.cz pub/local/mj/net/nsc-2.1.tar.gz
-Alternate-site: sunsite.unc.edu pub/Linux/system/network/management/nsc-2.1.tar.gz
+Author:         mj@ucw.cz (Martin Mares)
+Maintained-by:  mj@ucw.cz (Martin Mares)
+Primary-site:   atrey.karlin.mff.cuni.cz pub/local/mj/net/nsc-2.2.tar.gz
+Alternate-site: sunsite.unc.edu pub/Linux/system/network/management/nsc-2.2.tar.gz
 Copying-policy: GPL
 End
