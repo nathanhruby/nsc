@@ -1,3 +1,1 @@
-# User configuration of the NSC
-
-define(`NAMED_RESTART_CMD', `echo ndc reload')
+; User configuration of the NSC

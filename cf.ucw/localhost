@@ -4,5 +4,5 @@ SOA(localhost)
 NS(NSNAME)
 ADDR(127.0.0.1)
 
-; We don want NSC to add the standard localhost record to this zone
+; We don't want NSC to add the standard localhost record to this zone
 define(`DISABLE_LOCALHOST', `1')
