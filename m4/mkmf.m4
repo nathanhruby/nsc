@@ -70,7 +70,7 @@ divert(0)dnl
 `#'	Please don't edit manually
 `#'
 
-NSC=m4 NSCDIR/dnslib.m4 NSCDIR/nsc.m4
+NSC=M4 NSCDIR/dnslib.m4 NSCDIR/nsc.m4
 PGEN=m4 NSCDIR/dnslib.m4 NSCDIR/pgen.m4
 
 all: VERSDIR/.version
