@@ -19,6 +19,10 @@ define(MINUTES, `eval($1*60)')
 define(HOURS, `eval($1*3600)')
 define(DAYS, `eval($1*86400)')
 
+# Since slashes can occur in zone names, we convert them to @'s
+
+define(nsc_file_name, `translit($1,/,@)')
+
 # Reverse an IP address
 
 define(nsc_revIPa, `ifelse($#, 1, `$1', `nsc_revIPa(shift($@)).$1')')
@@ -80,11 +84,11 @@ define(`nsc__forloop',
 define(`nsc_fatal_error', `errprint(`NSC error: $1
 ')m4exit(1)')
 
-# Default values of parameters and user configuration
+# Default values of parameters
 
 define(`NAMED_RESTART_CMD', `ndc reload')
 
-define(`BIND_OPTIONS', `	# Other options can be added here via macro BIND_OPTIONS')
+define(`BIND_OPTIONS', `	# Other options can be added here via macro `BIND_OPTIONS'')
 
 define(`ROOT', `/etc/named')
 define(`CFDIR', `cf')
@@ -100,5 +104,11 @@ define(`MINTTL', DAYS(1))
 define(`NSNAME', translit(esyscmd(`hostname -f'),`
 ',`'))
 define(`MAINTNAME', `root'.`nsc_corr_dot(NSNAME)')
+
+# And finally we change comments to semicolons to be compatible with the zone files
+
+changecom(;)
+
+; User-defined parts of configuration
 
 include(CFDIR/config)

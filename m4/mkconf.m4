@@ -8,7 +8,7 @@ include(m4/dnslib.m4)
 
 define(`DO_PRIMARY', `divert(0)zone "$1" in {
 	type master;
-	file "ZONEDIR/$2";
+	file "ZONEDIR/nsc_file_name($2)";
 };
 
 divert(-1)')
@@ -20,7 +20,7 @@ define(`REVERSE', `DO_PRIMARY(REV($1),nsc_if_v6($1,`nsc_revblock6($1)',`nsc_reva
 
 define(`SECONDARY', `divert(0)zone "$1" in {
 	type slave;
-	file "BAKDIR/$1";
+	file "BAKDIR/nsc_file_name($1)";
 	masters { $2; };
 };
 

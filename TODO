@@ -2,8 +2,13 @@ DOC: mention namespaces
 DOC: mention trailing dot rules
 DOC: mention RFC 2317 (classless del.)
 DOC: ipv6 ::1.2.3.4 not supported
+DOC: verbatim text
 
 Update the utilities
 
+convert slashes in domain names when creating file names!
+
 freebsd: don't use `-f' in hostname
 domain names with dots
+
+? if a zone doesn't change, don't bump the version

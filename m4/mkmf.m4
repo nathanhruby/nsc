@@ -8,13 +8,13 @@ include(m4/dnslib.m4)
 
 define(`PRIMARIES', `')
 
-define(`nsc_prepend_cf_one', ` 'CFDIR/`$1')
+define(`nsc_prepend_cf_one', ` 'CFDIR/`nsc_file_name($1)')
 define(`nsc_prepend_cf_multi', `nsc_iterate(`nsc_prepend_cf_one', $@)')
-define(`PRIMARY', `divert(0)ZONEDIR/$1:nsc_prepend_cf_multi($@) $(DDEPS)
-	`$'(NSC)nsc_prepend_cf_multi($@) >ZONEDIR/$1 -DVERS=VERSDIR/$1
+define(`PRIMARY', `divert(0)ZONEDIR/nsc_file_name($1):nsc_prepend_cf_multi($@) $(DDEPS)
+	`$'(NSC)nsc_prepend_cf_multi($@) >ZONEDIR/nsc_file_name($1) -DVERS=VERSDIR/nsc_file_name($1)
 
 divert(-1)
-define(`PRIMARIES', PRIMARIES ZONEDIR/$1)
+define(`PRIMARIES', PRIMARIES ZONEDIR/nsc_file_name($1))
 ')
 
 define(`REVERSE', `PRIMARY(nsc_if_v6($1,`nsc_revblock6($1)',`nsc_revaddr($1)'), shift($@))')
