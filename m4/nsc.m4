@@ -1,6 +1,6 @@
 dnl ###
-dnl ### NSC 2.2 -- Zone File Generator
-dnl ### (c) 1997--1999 Martin Mares <mj@ucw.cz>
+dnl ### NSC 2.3 -- Zone File Generator
+dnl ### (c) 1997--2000 Martin Mares <mj@ucw.cz>
 dnl ###
 dnl ### Usage: m4 nsc.m4 domain-source-files >zone-file
 dnl ###    Or: m4 nsc.m4 domain-source-files >rev-zone-file -DREVERSE=net-ip -DREVBASE=net-ip-to-SOA
@@ -101,3 +101,5 @@ localhost	A	127.0.0.1
 divert`'ifdef(`REVERSE',`
 ')')
 m4wrap(`cleanup')
+
+include(cf/config)
