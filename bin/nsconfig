@@ -1,6 +1,6 @@
-#!/bin/sh
-# NSC 2.2 -- Makefile & Config file build script
-# (c) 1997--1999 Martin Mares <mj@ucw.cz>
+#!/bin/bash
+# NSC -- Makefile & Config file build script
+# (c) 1997--2000 Martin Mares <mj@ucw.cz>
 
 ROOT=/etc/named		# Root dir of the whole package
 CF=cf			# Place for all configuration files
@@ -14,9 +14,11 @@ MKFILE=Makefile		# Makefile to generate
 CONFFILE=named.conf	# Configuration file to generate
 CACHE=root.cache
 
-if [ \! -f $DOMAINS ] ; then
+M4=`which gm4` || M4=`which m4` || ( echo "Unable to find M4!" ; exit 1 )
+
+if [ ! -f $DOMAINS ] ; then
 	echo "Domain list file missing."
 	exit 1
 	fi
 m4 $NSC/dnslib.m4 $NSC/mkconf.m4 $DOMAINS >$CONFFILE -DZONEDIR=$ZONES -DBAKDIR=$BAX -DCACHE=$CACHE -DROOT=$ROOT
-m4 $NSC/dnslib.m4 $NSC/mkmf.m4 $DOMAINS >$MKFILE -DZONEDIR=$ZONES -DBAKDIR=$BAX -DCACHE=$CACHE -DVERSDIR=$VERS -DNSCDIR=$NSC -DCONF=$CONFFILE -DCFDIR=$CF
+m4 $NSC/dnslib.m4 $NSC/mkmf.m4 $DOMAINS >$MKFILE -DZONEDIR=$ZONES -DBAKDIR=$BAX -DCACHE=$CACHE -DVERSDIR=$VERS -DNSCDIR=$NSC -DCONF=$CONFFILE -DCFDIR=$CF -DM4=$M4
