@@ -1,3 +1,11 @@
+Version 2.3  [27-06-2001]
+
+  o  Global parameters (hostmaster mail address etc.) can be set
+     in cf/config now.
+  o  Autodetect which M4 should be used.
+  o  Fixed bugs in convert script.
+  o  Generate $TTL to make new releases of bind happy.
+
 Version 2.2  [11-09-1999]
 
   o  Corrected localhost records.

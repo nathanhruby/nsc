@@ -73,7 +73,7 @@ sub go {
 	if (defined $ips{$n}) { print "H($n$ips{$n})\n"; }
 	elsif ($flag) { print "HH($n)\n"; }
 	if (defined $mx{$n}) { print "MX($mx{$n})\n"; }
-	if (defined $cn{$n}) { print "CNAME($cn{$n})\n"; }
+	if (defined $cn{$n}) { print "ALIAS($cn{$n})\n"; }
 }
 
 sub norm_name {

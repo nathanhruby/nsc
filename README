@@ -1,7 +1,7 @@
 
-	     Domain Name Server Configuration Utilities -- NSC 2.2
+	     Domain Name Server Configuration Utilities -- NSC 2.3
 
-		    (c) 1997--1999 Martin Mares <mj@ucw.cz>
+		    (c) 1997--2001 Martin Mares <mj@ucw.cz>
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -43,7 +43,7 @@ GNU General Public License. See file COPYING in any of the GNU utility archives
    An interesting companion to this program is the Sleuth utility which checks
 consistency of DNS zones. It's written in perl with help of the DNS module,
 knows of more errors than other checkers and it's freely available at
-ftp://atrey.karlin.mff.cuni.cz/pub/local/mj/net/sleuth-1.0.tar.gz.
+ftp://atrey.karlin.mff.cuni.cz/pub/local/mj/net/sleuth-1.3.tar.gz.
 
 
 2. The Domain List File
