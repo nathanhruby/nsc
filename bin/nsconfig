@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # NSC -- Makefile & Config file build script
 # (c) 1997--2003 Martin Mares <mj@ucw.cz>
 
