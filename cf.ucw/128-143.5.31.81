@@ -1,0 +1,4 @@
+SOA(REV(81.31.5.128-143))
+NS(jabberwock.ucw.cz,cs.cecom.cz,cm.cecom.cz)
+
+REVERSE(81.31.5, 128, 143)

@@ -1,14 +1,13 @@
-# Domain table for NSC at UCW
+; Domain table for NSC at UCW
 
-# Various mandatory things
+; Various mandatory things required by RFC 1912, section 4.1
 PRIMARY(localhost)
 REVERSE(0)
 REVERSE(255)
 REVERSE(127.0.0, localhost)
 
 PRIMARY(ucw.cz)
-REVERSE(81.31.5, ucw.cz)
-REVERSE(2001:ae8::/64, ucw.cz)
+REVERSE(81.31.5.128-143, ucw.cz)
 PRIMARY(slady.cz)
 PRIMARY(slady.net)
 PRIMARY(pdesign.cz)

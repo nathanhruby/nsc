@@ -1,0 +1,7 @@
+; RFC 1912 tells us to provide a 0.0.127.in-addr.arpa zone with `1 PTR localhost.'
+
+SOA(REV(127.0.0))
+NS(NSNAME)
+REVERSE(127.0.0)
+
+; The actual localhost record comes from cf/localhost

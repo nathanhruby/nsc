@@ -1,0 +1,5 @@
+; RFC 1912 tells us to provide an empty 255.in-addr.arpa zone
+
+SOA(REV(255))
+NS(NSNAME)
+REVERSE(255)

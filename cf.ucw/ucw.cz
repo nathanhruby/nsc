@@ -3,8 +3,6 @@
 define(`jabip', `81.31.5.130')
 define(`ucwmx', `0 jabberwock')
 
-define(`minttl', 300)
-
 SOA(ucw.cz)
 NS(jabberwock.ucw.cz,drak.ucw.cz,ns.parcon.cz)
 MX(ucwmx, 10 drak)
@@ -14,8 +12,6 @@ DADDR(jabip)
 H(jabberwock, jabip)
 MX(ucwmx)
 ALIAS(lariat,www,ftp,vrr,cvs)
-
-H(jabberwock6, 2001:ae8::248:54ff:fe64:60b1)
 
 ; MJ's home network
 H(albireo, 81.27.194.19)
