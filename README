@@ -50,7 +50,7 @@ ftp://atrey.karlin.mff.cuni.cz/pub/local/mj/net/sleuth-1.0.tar.gz.
 ~~~~~~~~~~~~~~~~~~~~~~~
 
    The domain list contains configuration commands describing all domains the
-server should act as primary or secondary for and also some other parameters
+server is either primary or secondary for and also some other parameters
 which get inserted to named.conf and to the Makefile:
 
 OPTIONS(...)	- set insert options to named.conf. This command _must_ be used
@@ -67,35 +67,40 @@ SLAVE(f1,f2,...) - same as FORWARDers, but asks _only_ these.
 
 MAKEFILE(...)	- insert user data to the Makefile.
 
-PRIMARY(zone)	- define zone we act as a primary name server for.
+PRIMARY(zone)	- define zone we're a primary name server for.
 
-SECONDARY(zone, primary) - define zone we act as a secondary name server
-		  for. "primary" is an IP address of the primary NS for this
+SECONDARY(zone, primary) - define zone we're a secondary name server for.
+		  "primary" is an IP address of the primary NS for this
 		  zone.
 
 REVERSE(netprefix, zone1, zone2...) - define reverse zone containing all hosts
-		  from given zones starting with given netprefix. If you want
-		  to delegate some subrange of addresses to another name server
-		  (as defined by RFC XXXX), you need to use netprefix+count
-		  instead of zone name (e.g., 194.213.32.16+16) -- this
-		  generates correct CNAME glue records for the subrange.
+		  from given zones starting with given netprefix.
+
+		  If you want to delegate a part of your C range to another
+		  name server, use the PARTIAL directive to configure a partial
+		  reverse domain and mention a subzone (e.g., 194.213.32.16+16)
+		  in the main REVERSE directive.
+
 		  The list of name servers authoritative for the reverse zone
 		  is obtained from the _first_ zone specified as an argument,
-		  which must NOTbe a subrange specifier (you should use a dummy
+		  which must NOT be a subrange specifier (you should use a dummy
 		  zone in case you want only subranges).
 
 PARTIAL(netprefix, count, primary, sec1, sec2...) - define delegation of a
 		  reverse subzone (see REVERSE above) consisting of <count>
 		  addresses starting at <netprefix>. <primary> is a master
 		  server for that subzone, <sec1> ... <secn> are secondaries
-		  (except our name-server which is _always_ expected to be
-		  a secondary).
+		  (don't list the local name-server, it's always expected to
+		  be a secondary).
 
-PREVERSE(netprefix, zone1, zone2...) - define reverse zone for a subrange
-		  -- used when we want to export a subzone (to be imported
-		  by the master server for the corresponding parent zone
-		  by a mechanism similar to that specified by the PARTIAL
-		  command).
+PREVERSE(netprefix, zone1, zone2...) - analogon of REVERSE for partial zones
+		  (to be used when you want to export a subzone to another
+		  server which is configured by PARTIAL). Just use a 4-component
+		  netprefix.
+
+You can also change several predefined macros:
+
+	- named_restart_cmd: command used to restart named (default: `ndc reload')
 
 
 3. The Domain Files
@@ -150,7 +155,7 @@ Hosts:
 
    The NSC directory hierarchy contains the following directories:
 
-	bak/			- backups of zones we act as a secondary for
+	bak/			- backups of zones we're a secondary for
 	bin/			- scripts (e.g., nsconfig)
 	cf/			- configuration files (domains etc.)
 	m4/			- M4 scripts
