@@ -33,7 +33,7 @@ define(emit_ptr, `ifdef(`REVERSE', `mk_ptr($1,$2)divert(-1)')')
 # Version number
 
 define(ver_file, ifdef(`VERS',`VERS',`.nsc_version'))
-define(today_code, translit(esyscmd(`date +"%y%m%d"'),`
+define(today_code, translit(esyscmd(`date +"%Y%m%d"'),`
 ',`'))
 sinclude(ver_file)
 ifelse(today_code, last_today_code, `', `define(`subver_num',1)')
