@@ -1,0 +1,8 @@
+Version 2.2  [11-09-1999]
+
+  o  Corrected localhost records.
+  o  Name-server restart command can be overriden (useful for setups
+     with multiple named's).
+  o  Added `convert' script for easy conversion of zone files to NSC
+     domain files.
+  o  Serial numbers are now Y2K clean.
