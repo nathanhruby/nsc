@@ -5,41 +5,40 @@
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#### BIG FAT WARNING ####
+   NSC is a set of shell and M4 scripts for easy maintenance of DNS zone files
+and name server daemon configuration (currently available only for BIND 8.X,
+but easily portable for other daemons). It has been designed to make administration
+of a DNS server a piece of cake (unlike other utilities which resemble more
+an English pudding :-) ), which includes automatic generation of reverse records
+for all your hosts, handling of classless reverse delegations and support for IPv6
+(AAAA and PTR in in6.arpa, not A6 and DNAME which seem to be dying out).
 
-NSC 3.0 is close to having been rewritten from scratch. However, the documentation
-has not been updated yet, only the example configs in cf/* were.
+   NSC requires GNU m4 and a POSIX-compatible shell, some of the extra utilities
+require Perl 5. I've tested everything on Linux (Debian Woody), but the whole
+package should run on other unices as well.
 
-#### BIG FAT END OF WARNING ####
-
-
-   NSC is a set of shell and M4 scripts for easy maintenance of all domain name
-server files (including configuration and zone files). It requires BIND 8.X,
-GNU bash and GNU m4 to be installed on the system. All programs have been
-tested on Linux, but should work on all unices assuming the required packages
-are present.
-
-   The whole program can be used and distributed according to the terms of the
+   The whole package can be used and distributed according to the terms of the
 GNU General Public License. See file COPYING in any of the GNU utility archives
-(you should have one as you are expected to have at least GNU M4 :-]).
+(you should have one as you are expected to have at least GNU M4 ;-)).
 
 
-1. Getting Started
-~~~~~~~~~~~~~~~~~~
-
-   To use NSC, you need to perform the following steps:
+1. Quick Howto for the Impatient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(everything will be explained in more detail in the subsequent sections)
 
 	- Create a directory where all NSC files will reside (e.g., /etc/named)
 	  and copy everything from the NSC distribution here.
 
-	- Link /etc/named.conf to /etc/named/named.conf
+	- Symlink /etc/bind/named.conf (or /etc/named.conf or where the config file
+	  of your installation of BIND resides) to /etc/named/named.conf
 
-	- CD to /etc/named
+	- Change directory to /etc/named
 
-	- Edit cf/domains and add lines for all domains you want to use (see
-	  the next section for what configuration commands are available).
+	- Edit cf/domains to suit your needs -- replace the example domains
+	  by your entries.
 
-	- Define cf/<domain-name> for all domains (see section three).
+	- Create cf/<domain-name> for all domains (again, you can easily follow
+	  the example domains).
 
 	- Run bin/nsconfig (Makefile and named.conf will be generated).
 
@@ -48,144 +47,291 @@ GNU General Public License. See file COPYING in any of the GNU utility archives
 	- Enjoy your new DNS setup. If everything goes OK, be happy. Else
 	  write a bug report :-)
 
-   An interesting companion to this program is the Sleuth utility which checks
-consistency of DNS zones. It's written in perl with help of the DNS module,
-knows of more errors than other checkers and it's freely available at
-ftp://atrey.karlin.mff.cuni.cz/pub/local/mj/net/sleuth-1.3.tar.gz.
+	- Every time you modify the domain files
+
+   An interesting companion to this package is the DNS Sleuth -- a DNS zone
+consistency checker. It's a simple utility written in Perl with help of the
+DNS module and it should be able to detect all common errors in DNS setup
+(I have written it after much disappointment with the other checkers).
+The Sleuth is available online on http://atrey.karlin.mff.cuni.cz/~mj/sleuth/,
+follow the links to download the source.
+
+
+2. Directory structure
+~~~~~~~~~~~~~~~~~~~~~~
+The NSC directory (/etc/named in the above example) contains the following
+files and subdirectories:
+
+	cf/			- user-defined configuration files
+	cf/domains		- the domain list (see Section 3)
+	cf/config		- global settings (see Section XXX)
+	cf/<domain>		- each domain has its own config file
+	bin/			- commands (e.g., nsconfig)
+	m4/			- M4 scripts (used by the commands)
+	zone/			- primary zone files
+	bak/			- backups of zones we serve as a secondary NS for
+	ver/			- version files where NSC remembers version
+				  numbers of the primary zones
+
+   How are different files created:
+
+	- You create everything in cf/.
+	- Then you run bin/nsconfig.
+	- Makefile and named.conf gets created according to cf/domains.
+	- You run make.
+	- The Makefile creates primary zone files in zone/ and version files
+	  in ver/ and tells BIND to reload its configuration.
+	- BIND downloads contents of secondary zones and puts them to bak/.
 
 
 2. The Domain List File
 ~~~~~~~~~~~~~~~~~~~~~~~
+The domain list contains configuration commands describing all domains handled
+by your server and their parameters. In fact, it's a M4 script, but viewing it as
+a config file is a good approximation (however, see Section XXX for some caveats).
+Lines starting with a semicolon are treated as comments and ignored. Text outside
+declarations is silently ignored.
 
-   The domain list contains configuration commands describing all domains the
-server is either primary or secondary for and also some other parameters
-which get inserted to named.conf and to the Makefile:
+You can specify:
 
-OPTIONS(...)	- set insert options to named.conf. This command _must_ be used
-		  at the start of cf/domains even if the list of supplied
-		  options is empty.
+PRIMARY(zone, [extra-files...])
+		Define a zone (domain) we run a primary name server for.
+		The contents of the zone are described in cf/<zone>
+		and possibly in other specified cf files (all files are
+		concatenated to produce a single configuration). See the next
+		section for a look inside these files.
 
-CONFIG(...)	- insert user data to named.conf (e.g., the logging options).
+SECONDARY(zone, primary)
+		Define a zone we run a secondary name server for.
+		"primary" is an IP address of the primary name server.
 
-FORWARD(f1,f2,...) - specify forwarders (name servers we ask first if we are
-		  behind a firewall or we try to do better caching). This must
-		  be included in the OPTIONS block.
+REVERSE(network, primary-files...)
+		Define a reverse zone for the given network. The network name
+		consists of several numbers separated by dots, just like an IP
+		address does, but the network usually has only 3 components.
+		Each reverse zone has its own config file cf/<network> which
+		can of course specify the contents of the zone.
 
-SLAVE(f1,f2,...) - same as FORWARDers, but asks _only_ these.
+		However, there is a more convenient method to generate the PTR
+		records directly from the A records: just specify the REVERSE
+		directive in cf/<network> and then include all the config files
+		for the primary zones containing hosts from this network. The
+		automatic concatenation of multiple primary-files comes very
+		handy for that.
 
-MAKEFILE(...)	- insert user data to the Makefile.
+		In fact, REVERSE(network, p-f...) is almost an equivalent of
+		PRIMARY(REV(network), p-f...) where REV(network) is a macro
+		translating network numbers to names of the corresponding
+		reverse zones [e.g., REV(1.2.3) equals 3.2.1.in-addr.arpa].
+		The only difference is that although the domain name is translated
+		by REV, the config file is still named according to the network.
+		You can also use the REV macro explicitly, which can be handy
+		for example in SECONDARY declarations.
 
-PRIMARY(zone)	- define zone we're a primary name server for.
+CONFIG(...)	- insert user data to named.conf
 
-SECONDARY(zone, primary) - define zone we're a secondary name server for.
-		  "primary" is an IP address of the primary NS for this
-		  zone.
-
-REVERSE(netprefix, zone1, zone2...) - define reverse zone containing all hosts
-		  from given zones starting with given netprefix.
-
-		  If you want to delegate a part of your C range to another
-		  name server, use the PARTIAL directive to configure a partial
-		  reverse domain and mention a subzone (e.g., 194.213.32.16+16)
-		  in the main REVERSE directive.
-
-		  The list of name servers authoritative for the reverse zone
-		  is obtained from the _first_ zone specified as an argument,
-		  which must NOT be a subrange specifier (you should use a dummy
-		  zone in case you want only subranges).
-
-PARTIAL(netprefix, count, primary, sec1, sec2...) - define delegation of a
-		  reverse subzone (see REVERSE above) consisting of <count>
-		  addresses starting at <netprefix>. <primary> is a master
-		  server for that subzone, <sec1> ... <secn> are secondaries
-		  (don't list the local name-server, it's always expected to
-		  be a secondary).
-
-PREVERSE(netprefix, zone1, zone2...) - analogon of REVERSE for partial zones
-		  (to be used when you want to export a subzone to another
-		  server which is configured by PARTIAL). Just use a 4-component
-		  netprefix.
-
-You can also change several predefined macros:
-
-	- named_restart_cmd: command used to restart named (default: `ndc reload')
+MAKEFILE(...)	- insert user data to Makefile
 
 
 3. The Domain Files
 ~~~~~~~~~~~~~~~~~~~
+The domain files contain descriptions of all DNS records for the given
+domain, starting with the SOA record. Again, these are M4 scripts and the
+declarations are macro calls. Lines starting with a semicolon are treated
+as comments and just copied to the generated zone file. Text outside
+declarations is copied to the zone file as well, so you can spice up the NSC
+output with your own records.
 
-   The domain files contain descriptions of all DNS records for the given
-domain, starting with the SOA record. As these files are processed by the M4,
-you can simply insert plain RR data between the macro calls (such data are
-ignored if we're generating a reverse zone) and define your own macros at the
-beginning. The standard macros you can redefine are:
+Your menu:
 
-	- refresh, retry, expire, minttl: standard SOA timing parameters (you
-	  can specify them as number of seconds or using predefined time macros
-	  as minutes(N), hours(N) and days(N).
+SOA(domain-name)
+		Generate a SOA record for the domain. This must be the first
+		declaration in the config file. The parameters of the SOA
+		are taken from configuration variables (see below). The
+		serial number is calculated from the version number remembered
+		in the version file, following the usual practice of encoding
+		current date and a sequence number within the current day
+		in the serial number, which is guaranteed to be strictly
+		increasing unless you perform more than 99 updates in a single
+		day (in which case NSC stops and tells you to tweak the serial
+		number manually).
 
-	- nsname: our canonical name (defaults to result of `hostname -f`)
+		The SOA record otherwise acts like a subdomain (D) declaration,
+		therefore it can be followed by other records like NS (mandatory)
+		or MX.
 
-	- maintname: zone maintainer name (defaults to 'root@nsname')
+H(host)
+		Start declaration of a host. Doesn't generate anything, only
+		remembers the host's name.
 
-SOA record:
+ADDR(addr...)
+		Specify addresses for the current host. In the normal mode, it
+		creates A records, in the reverse mode, PTR records.
 
-	SOA(domainname)		- generates the SOA itself (serial numbers are
-				  created automagically from current data and
-				  version counter stored in a separate file)
-	NS(ns1,ns2,...)		- generates list of authoritative NS's
-	MX(pri1 mx1, ...)	- [optional] - generates list of mail exchangers
-				  for mail addressed directly to the domain
-				  name. Each MX is preceeded by its priority.
+H(host, addr...)
+		A shortcut for H(host) ADDR(addr...) -- in many cases everything
+		you need for a single host.
 
-Subdomains:
+DADDR(addr...)
+		Like ADDR, but supresses PTR records. (This one is useful if you
+		have a single IP address used for zillions of names and you want
+		to avoid having zillions of PTR records for the same address.)
 
-	D(name)			- remembers domain name for further macros
-	NS(ns1,ns2,...)		- generates list of authoritative NS's
-				  [you might need to insert glue A records
-				   manually]
+DH(host, addr...)
+		A shortcut for H(host) DADDR(addr...)
 
-Hosts:
+D(domain)
+		Start declaration of a subdomain. Technically the same as H(domain),
+		but this one should be more intuitive.
 
-	H(name,list-of-ip-addrs) - define new host with given IP addresses
-	HI(hw,os)		- define HINFO record
-	MX(pri1 mx1, ...)	- define mail exchangers for that host
-	ALIAS(al1, al2,...)	- define aliases for that host
+GLUE(ns, addr...)
+		Specify a glue record for a name server contained within a subdomain
+		it's a primary for. Currently it's an equivalent of DH(ns, addr...).
 
-	HH(name)		- define dummy host without any addresses
-				  (e.g., only for mail)
-	RH(name,list-of-ip-addrs) - define out-of-domain host appearing only
-				  in the reverse zone
+NS(ns...)
+		Specify a list of name server names for the current domain
+		(started by either a SOA or D declaration). Generates NS records.
+
+MX(mx...)
+		Specify a list of mail exchangers for the current host or domain.
+		Each mail exchanger should be preceded by a priority. Generates
+		MX records.
+
+HI(hw,os)
+		Specify a HINFO record for the current host. Very rare in the
+		today's Internet.
+
+ALIAS(alias...)
+		Specify a list of aliases for the current host or domain.
+		Generates a series of CNAME records pointing from the aliases
+		to the current host/domain.
+
+CNAME(src, dest)
+		Generate a CNAME record -- "src" points to "dest".
+
+PTR(src, dest)
+		Generate a PTR record -- "src" points to "dest". It's a common
+		record in reverse zones (and although it's legal in forward
+		zones as well, such use is very rare), however it's more convenient
+		to have your PTR's generated by the REVERSE directive. But if you
+		need anything special, here is the tool.
+
+REVBLOCK(subdomain, min, max)
+		Generate a series of CNAME records numbered from `min' to `max'
+		and pointing to the same name in the given subdomain, finally
+		declaring the subdomain as well, so you can continue with its
+		NS records.
+
+		Example: REVBLOCK(a, 16, 18) NS(ns.xyzzy.org) yields
+
+			16	CNAME	16.a
+			17	CNAME	17.a
+			18	CNAME	18.a
+			a	NS	ns.xyzzy.org.
+
+		This is a very common construct for classless reverse delegations,
+		see Section XXX for more details.
+
+REVERSE(network)
+		Switch to reverse mode. From this point on, all output is supressed
+		except for ADDR declarations belonging to the specified network which
+		are automatically converted to PTR records.
+
+		With help of this feature, defining reverse zones can be as easy as:
+
+			; Reverse zone for 10.0.0.0/24 a.k.a. 0.0.10.in-addr.arpa.
+			SOA(REV(10.0.0))
+			NS(ns1.example.com, ns2.example.com)
+			REVERSE(10.0.0)
+			; Include all primary zones containing ADDR's from this range,
+			; which can be accomplished by a multi-file REVERSE declaration
+			; in cf/domains.
 
 
-4. Directory structure
-~~~~~~~~~~~~~~~~~~~~~~
+4. Configuration variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+There is a fair amount of configuration variables (which are in reality normal
+M4 macros). Each variable has a hard-wired default value which can be overriden
+in cf/config by re-defining the variable. Also, all other config files can specify
+their local definitions, but you need to be careful to change the variable before
+it is used for the first time.
 
-   The NSC directory hierarchy contains the following directories:
+To change the setting, use
 
-	bak/			- backups of zones we're a secondary for
-	bin/			- scripts (e.g., nsconfig)
-	cf/			- configuration files (domains etc.)
-	m4/			- M4 scripts
-	ver/			- version files where NSC remembers version
-				  numbers for the zones
-	zone/			- primary zone files
+		define(`variable', `value')
+
+As usually, even this config file is a M4 script. Comments can be started by
+semicolons, text outside macros is ignored.
+
+The following variables are available:
+
+NAMED_RESTART_CMD	Shell command for restarting the name server daemon
+			(default: ndc restart)
+
+ROOT			Root directory of the whole package (default: /etc/named)
+CFDIR			Directory with config files (default: cf)
+ZONEDIR			Directory with zone files (default: zone)
+BAKDIR			Directory with backup files (default: bak)
+VERSDIR			Directory with version files (default: var)
+ROOTCACHE		File with the cache of root nameservers
+
+REFRESH			SOA record parameters
+RETRY
+EXPIRE
+MINTTL
+NSNAME			Origin server (default: hostname of your machine)
+MAINTNAME		Domain maintainer name (default: root@NSNAME)
+
+BIND_OPTIONS		Extra options to put to the options { ...} section of named.conf
+
+For the timing parameters, the following shortcuts are avaiable:
+
+HOURS(n)		Convert hours to seconds
+MINUTES(n)		Convert minutes to seconds
+DAYS(n)			Convert days to seconds
+
+For the BIND_OPTIONS, we offer:
+
+FORWARD(ip...)		Try to ask the given nameservers first to see if they
+			have the reply cached.
+SLAVE(ip...)		Pass all non-local requests to the given nameservers.
 
 
 5. Makefile targets
 ~~~~~~~~~~~~~~~~~~~
+The Makefile generated by NSC offers the following targets:
 
-	all			- update all files and restart named
-	clean			- clean all normal data files
-	clobber			- clean + delete Makefile and named.conf (should
-				  be done after major reconfiguration)
+	all (default)		- update all zone files and reload the daemon
+	clean			- clean all generated zone files and backups
+	clobber			- clean + delete Makefile and named.conf
+				  (wise to do after major reconfigurations)
 	distclean		- clobber + delete all version files (use only
 				  if you really know what you are doing as the
 				  serial number information in newly generated
 				  files might be inconsistent then).
 
 
-6. Other utilities
+6. Classless reverse delegations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+7. Support for IPv6
+~~~~~~~~~~~~~~~~~~~
+
+
+
+		in style of RFC 2317. The RFC recommends syntax `net/prefix-len'
+		for the subdomains (which is especially nasty for all systems
+		storing domains in files with the same name :) ; NSC avoids this
+		by automagically translating all slashes in domain names to @'s
+		when creating file names)
+
+
+8. Interaction with M4
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+9. Other utilities
 ~~~~~~~~~~~~~~~~~~
 
 chkdom		Checks domains for correctness using the 'host' utility
