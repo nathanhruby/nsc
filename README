@@ -1,0 +1,175 @@
+
+	     Domain Name Server Configuration Utilities -- NSC 2.1
+
+		       (c) 1998 Martin Mares <mj@ucw.cz>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   NSC is a set of shell and M4 scripts for easy maintenance of all domain name
+server files. It requires BIND 8.X, GNU bash and GNU m4 to be installed on the
+system. All programs have been tested on Linux, but should work on all unices
+assuming the required packages are present.
+
+   The whole program can be used and distributed according to the terms of the
+GNU General Public License. See file COPYING in any of the GNU utility archives
+(you should have one as you are expected to have at least GNU M4 :-]).
+
+
+1. Getting Started
+~~~~~~~~~~~~~~~~~~
+
+   To use NSC, you need to perform the following steps:
+
+	- Create a directory where all NSC files will reside (e.g., /etc/named)
+	  and copy everything from the NSC distribution here.
+
+	- Link /etc/named.conf to /etc/named/named.conf
+
+	- CD to /etc/named
+
+	- Edit cf/domains and add lines for all domains you want to use (see
+	  the next section for what configuration commands are available).
+
+	- Define cf/<domain-name> for all domains (see section three).
+
+	- Run bin/nsconfig (Makefile and named.conf will be generated).
+
+	- Run make.
+
+	- Enjoy your new DNS setup. If everything goes OK, be happy. Else
+	  write a bug report :-)
+
+
+2. The Domain List File
+~~~~~~~~~~~~~~~~~~~~~~~
+
+   The domain list contains configuration commands describing all domains the
+server should act as primary or secondary for and also some other parameters
+which get inserted to named.conf and to the Makefile:
+
+OPTIONS(...)	- set insert options to named.conf. This command _must_ be used
+		  at the start of cf/domains even if the list of supplied
+		  options is empty.
+
+CONFIG(...)	- insert user data to named.conf (e.g., the logging options).
+
+FORWARD(f1,f2,...) - specify forwarders (name servers we ask first if we are
+		  behind a firewall or we try to do better caching). This must
+		  be included in the OPTIONS block.
+
+SLAVE(f1,f2,...) - same as FORWARDers, but asks _only_ these.
+
+MAKEFILE(...)	- insert user data to the Makefile.
+
+PRIMARY(zone)	- define zone we act as a primary name server for.
+
+SECONDARY(zone, primary) - define zone we act as a secondary name server
+		  for. "primary" is an IP address of the primary NS for this
+		  zone.
+
+REVERSE(netprefix, zone1, zone2...) - define reverse zone containing all hosts
+		  from given zones starting with given netprefix. If you want
+		  to delegate some subrange of addresses to another name server
+		  (as defined by RFC XXXX), you need to use netprefix+count
+		  instead of zone name (e.g., 194.213.32.16+16) -- this
+		  generates correct CNAME glue records for the subrange.
+		  The list of name servers authoritative for the reverse zone
+		  is obtained from the _first_ zone specified as an argument,
+		  which must NOTbe a subrange specifier (you should use a dummy
+		  zone in case you want only subranges).
+
+PARTIAL(netprefix, count, primary, sec1, sec2...) - define delegation of a
+		  reverse subzone (see REVERSE above) consisting of <count>
+		  addresses starting at <netprefix>. <primary> is a master
+		  server for that subzone, <sec1> ... <secn> are secondaries
+		  (except our name-server which is _always_ expected to be
+		  a secondary).
+
+PREVERSE(netprefix, zone1, zone2...) - define reverse zone for a subrange
+		  -- used when we want to export a subzone (to be imported
+		  by the master server for the corresponding parent zone
+		  by a mechanism similar to that specified by the PARTIAL
+		  command).
+
+
+3. The Domain Files
+~~~~~~~~~~~~~~~~~~~
+
+   The domain files contain descriptions of all DNS records for the given
+domain, starting with the SOA record. As these files are processed by the M4,
+you can simply insert plain RR data between the macro calls (such data are
+ignored if we're generating a reverse zone) and define your own macros at the
+beginning. The standard macros you can redefine are:
+
+	- refresh, retry, expire, minttl: standard SOA timing parameters (you
+	  can specify them as number of seconds or using predefined time macros
+	  as minutes(N), hours(N) and days(N).
+
+	- nsname: our canonical name (defaults to result of `hostname -f`)
+
+	- maintname: zone maintainer name (defaults to 'root@nsname')
+
+SOA record:
+
+	SOA(domainname)		- generates the SOA itself (serial numbers are
+				  created automagically from current data and
+				  version counter stored in a separate file)
+	NS(ns1,ns2,...)		- generates list of authoritative NS's
+	MX(pri1 mx1, ...)	- [optional] - generates list of mail exchangers
+				  for mail addressed directly to the domain
+				  name. Each MX is preceeded by its priority.
+
+Subdomains:
+
+	D(name)			- remembers domain name for further macros
+	NS(ns1,ns2,...)		- generates list of authoritative NS's
+				  [you might need to insert glue A records
+				   manually]
+
+Hosts:
+
+	H(name,list-of-ip-addrs) - define new host with given IP addresses
+	HI(hw,os)		- define HINFO record
+	MX(pri1 mx1, ...)	- define mail exchangers for that host
+	ALIAS(al1, al2,...)	- define aliases for that host
+
+	HH(name)		- define dummy host without any addresses
+				  (e.g., only for mail)
+	RH(name,list-of-ip-addrs) - define out-of-domain host appearing only
+				  in the reverse zone
+
+
+4. Directory structure
+~~~~~~~~~~~~~~~~~~~~~~
+
+   The NSC directory hierarchy contains the following directories:
+
+	bak/			- backups of zones we act as a secondary for
+	bin/			- scripts (e.g., nsconfig)
+	cf/			- configuration files (domains etc.)
+	m4/			- M4 scripts
+	ver/			- version files where NSC remembers version
+				  numbers for the zones
+	zone/			- primary zone files
+
+
+5. Makefile targets
+~~~~~~~~~~~~~~~~~~~
+
+	all			- update all files and restart named
+	clean			- clean all normal data files
+	clobber			- clean + delete Makefile and named.conf (should
+				  be done after major reconfiguration)
+	distclean		- clobber + delete all version files (use only
+				  if you really know what you are doing as the
+				  serial number information in newly generated
+				  files might be inconsistent then).
+
+
+6. Other utilities
+~~~~~~~~~~~~~~~~~~
+
+chkdom		Checks domains for correctness using the 'host' utility
+		(check ftp://ftp.nikhef.nl/pub/network for latest version).
+		Use chkdom <domain> <NS> to check specific domain or no
+		parameters to check all domains mentioned in cf/domains.

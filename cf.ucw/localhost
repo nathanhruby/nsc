@@ -1,0 +1,5 @@
+; Special pseudo-domain for localhost
+
+SOA()
+NS(nsname)
+H(localhost,127.0.0.1)

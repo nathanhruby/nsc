@@ -1,0 +1,21 @@
+# NSC 2.0 -- Makefile & Config file build script
+# (c) 1997 Martin Mares <mj@gts.cz>
+
+ROOT=/etc/named		# Root dir of the whole package
+CF=cf			# Place for all configuration files
+ZONES=zone		# Place for all primary zone files
+BAX=bak			# Place for all secondary zone files
+VERS=ver		# Place for all primary version files
+NSC=m4			# Place for all scripts
+
+DOMAINS=$CF/domains	# The master domain list
+MKFILE=Makefile		# Makefile to generate
+CONFFILE=named.conf	# Configuration file to generate
+CACHE=root.cache
+
+if [ \! -f $DOMAINS ] ; then
+	echo "Domain list file missing."
+	exit 1
+	fi
+m4 $NSC/dnslib.m4 $NSC/mkconf.m4 $DOMAINS >$CONFFILE -DZONEDIR=$ZONES -DBAKDIR=$BAX -DCACHE=$CACHE -DROOT=$ROOT
+m4 $NSC/dnslib.m4 $NSC/mkmf.m4 $DOMAINS >$MKFILE -DZONEDIR=$ZONES -DBAKDIR=$BAX -DCACHE=$CACHE -DVERSDIR=$VERS -DNSCDIR=$NSC -DCONF=$CONFFILE -DCFDIR=$CF

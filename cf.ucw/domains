@@ -1,0 +1,13 @@
+# Domain table for NSC at UCW
+
+OPTIONS()
+
+PRIMARY(ucw.cz)
+
+SECONDARY(sinus.cz, 194.213.33.1)
+
+REVERSE(0, localhost)
+REVERSE(255, localhost)
+REVERSE(127.0.0, localhost)
+
+REVERSE(62.168.0, ucw.cz)

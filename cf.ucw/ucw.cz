@@ -1,0 +1,40 @@
+; Name server domain file for ucw.cz by MJ
+
+; 62.168.0.0 [8]	Local arcnet
+; 62.168.0.8 [4]	PTP link to GTS
+; 62.168.0.12 [4]	PTP LL link to GTS
+; 62.168.0.16 [4]	PTP link to Alcyone
+
+define(`ucwmx', `50 atrey.karlin.mff.cuni.cz, 60 k332.feld.cvut.cz, 100 server1.gts.cz, 110 server2.gts.cz')
+define(`MJNET', `62.168.0')
+
+SOA(ucw.cz)
+NS(server1.gts.cz,hubserv.gts.cz)
+MX(ucwmx)
+
+H(albireo, MJNET.14, MJNET.1)
+MX(ucwmx)
+
+H(toaster, MJNET.3)
+
+H(alcyone-gw, MJNET.17)
+H(alcyone, MJNET.18)
+
+H(ucw-cb, MJNET.9)
+H(albireo-cb, MJNET.10)
+
+H(albireo-eth0, MJNET.21)
+H(abacus, MJNET.22)
+
+H(ucw-gw, MJNET.13)
+
+HH(elf)
+MX(5 atrey.karlin.mff.cuni.cz, 100 server1.gts.cz, 110 server2.gts.cz)
+
+HH(bug)
+MX(5 atrey.karlin.mff.cuni.cz, 100 server1.gts.cz, 110 server2.gts.cz)
+
+HH(twilight)
+MX(5 atrey.karlin.mff.cuni.cz, 100 server1.gts.cz, 110 server2.gts.cz)
+
+the.name.of.my.computer.is.longer.than.any.name.of.a.computer.you.might.possibly.have	CNAME	mouse.gts.cz.
