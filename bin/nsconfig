@@ -1,5 +1,5 @@
-# NSC 2.0 -- Makefile & Config file build script
-# (c) 1997 Martin Mares <mj@gts.cz>
+# NSC 2.2 -- Makefile & Config file build script
+# (c) 1997--1999 Martin Mares <mj@ucw.cz>
 
 ROOT=/etc/named		# Root dir of the whole package
 CF=cf			# Place for all configuration files
