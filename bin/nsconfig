@@ -1,3 +1,4 @@
+#!/bin/sh
 # NSC 2.2 -- Makefile & Config file build script
 # (c) 1997--1999 Martin Mares <mj@ucw.cz>
 
