@@ -15,8 +15,8 @@
 ;	New versions of this file are announced periodically on the
 ;	<namedroppers@internic.net>d <ietf@ietf.org> mailing lists.
 ;
-;       last update:    January 19, 1999
-;       related version of root zone:   1999011900
+;       last update:    December 20, 2003
+;       related version of root zone:   2003122000
 ;
 ;
 ; formerly NS.INTERNIC.NET
@@ -67,7 +67,8 @@ I.ROOT-SERVERS.NET.      3600000      A     192.36.148.17
 ; temporarily housed at NSI (InterNIC)
 ;
 .                        3600000      NS    J.ROOT-SERVERS.NET.
-J.ROOT-SERVERS.NET.      3600000      A     198.41.0.10
+J.ROOT-SERVERS.NET.      3600000      A     192.58.128.30
+
 ;
 ; housed at LINX, operated by RIPE NCC
 ;
