@@ -37,7 +37,9 @@ REVERSE(10.2, a.example.com)
 SECONDARY(REV(10.1.0.128/25), 10.1.0.2)
 
 ; And vice versa: we are delegated 10.3.0.64/26, so we want to create
-; the corresponding subdomain.
+; the corresponding subdomain. The "/" in domain name gets automatically
+; translated to "@" when forming a file name, so you will find the corresponding
+; config file in cf/64@26.0.3.10.
 
 REVERSE(10.3.0.64/26, a.example.com)
 
