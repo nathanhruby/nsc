@@ -52,13 +52,13 @@ define(`cleanup', `divert(0)VERSDIR/.version: ALLVERS
 	touch VERSDIR/.version
 
 clean:
-	rm -f BAKDIR/* ZONEDIR/*
+	find BAKDIR ZONEDIR -type f -maxdepth 1 | xargs rm -f
 
 clobber: clean
 	rm -f Makefile CONF
 
 distclean: clobber
-	rm -f VERSDIR/* VERSDIR/.version
+	find VERSDIR -type f -maxdepth 1 | xargs rm -f
 ')
 
 divert(0)dnl
