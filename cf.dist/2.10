@@ -1,0 +1,6 @@
+; Yet another reverse domain, this time for a large /16 network;
+; see cf/0.0.10 for comments.
+
+SOA(REV(10.2))
+NS(ns1.example.com, ns2.example.com)
+REVERSE(10.2)

@@ -1,0 +1,25 @@
+; Domain configuration file for 1.0.10.in-addr.arpa
+
+; The beginning is the same as in cf/0.1.10
+SOA(REV(10.1.0))
+NS(ns1.example.com, ns2.example.com)
+
+; A manually specified `PTR' record
+
+PTR(42, answer.universe.net)
+
+; The range 128-255 is delegated to another server using the syntax
+; specified in RFC 2317. The `REVBLOCK' macro generates the subdomain
+; and also all required `CNAME' records, but we need to specify the
+; name servers for the subdomain explicitly. (`REVBLOCK' behaves like
+; a `D' wrt. additional records.)
+
+; The first parameter is the name of the subdomain, the other two specify
+; a range of addresses to delegate.
+
+REVBLOCK(128/25, 128, 255)
+NS(ns.a.example.com)
+
+; And again the automatic reverse mode
+
+REVERSE(10.1.0)

@@ -1,0 +1,50 @@
+; An example domain table for the NSC
+
+; Various mandatory things required by RFC 1912, section 4.1
+PRIMARY(localhost)
+REVERSE(0)
+REVERSE(255)
+REVERSE(127.0.0, localhost)
+
+; A pretty normal example domain (we act as a primary nameserver for it)
+
+PRIMARY(example.com)
+
+; It also has a couple of sub-domains and one of them resides on another server
+
+PRIMARY(a.example.com)
+SECONDARY(b.example.com, 10.0.0.1)
+
+; Here are reverse delegations for two networks. NSC automatically creates
+; the PTR records from A records in all mentioned zones. See cf/{0,1}.0.10.
+
+REVERSE(10.0.0, example.com, a.example.com)
+REVERSE(10.1.0, example.com, a.example.com, ip6.example.com)
+
+; You can even have reverse zones for larger networks
+
+REVERSE(10.2, a.example.com)
+
+; Here are the examples of classless reverse delegation using subdomains
+; and PTR records as recommended by RFC 2317. We use the subdomain names
+; recommended by the RFC, however, this is not fixed anywhere and you can
+; use any names you like (or your ISP likes).
+
+; In the 10.1.0 network, we define a classless delegation (see cf/0.1.10),
+; but we also want to run a secondary server for the subdomain. As usually,
+; the REV macro is handy for constructing a reverse domain name.
+
+SECONDARY(REV(10.1.0.128/25), 10.1.0.2)
+
+; And vice versa: we are delegated 10.3.0.64/26, so we want to create
+; the corresponding subdomain.
+
+REVERSE(10.3.0.64/26, a.example.com)
+
+; The final challenge: a subdomain with both IPv4 and IPv6 records
+; together with the corresponding reverse records (in IPv6 mode, all
+; networks are always accompanied by a netmask).
+; See cf/ip6.example.com and cf/4.3.2.1.0.c.e.f for details
+
+PRIMARY(ip6.example.com)
+REVERSE(fec0:1234::/32, ip6.example.com)

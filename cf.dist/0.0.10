@@ -1,0 +1,18 @@
+; Domain configuration file for 0.0.10.in-addr.arpa
+
+; We use a `REV' macro to create the name of the reverse domain for us
+
+SOA(REV(10.0.0))
+
+; As usually, we need to specify name servers
+
+NS(ns1.example.com, ns2.example.com)
+
+; And now, we switch NSC to the automatic reverse mode for our network
+
+REVERSE(10.0.0)
+
+; From now on, all host addresses within the specified network will
+; be automatically converted to reverse `PTR' records.
+
+; You can find more sophisticated examples in cf/0.1.10

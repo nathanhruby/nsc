@@ -1,0 +1,6 @@
+; User configuration of the NSC
+
+; All configuration macros have hard-wired defaults which can be
+; overriden here (all of them), in the cf/domains file (with some
+; exceptions) and in each domain configuration file (with the same
+; exceptions)

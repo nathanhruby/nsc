@@ -1,0 +1,13 @@
+; Another reverse domain, this time with classless delegation:
+
+SOA(REV(10.3.0.64/26))
+
+; Our name server
+NS(ns1.example.com)
+
+; The provider's name servers
+NS(ns1.example.net, ns2.example.net)
+
+; Automatic reverse mode, but this time with range specification
+
+REVERSE(10.3.0, 64, 127)

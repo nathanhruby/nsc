@@ -1,0 +1,8 @@
+; RFC 1912 tells us to provide a localhost zone with `localhost A 127.0.0.1'
+
+SOA(localhost)
+NS(NSNAME)
+ADDR(127.0.0.1)
+
+; We don't want NSC to add the standard localhost record to this zone
+define(`DISABLE_LOCALHOST', `1')
