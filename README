@@ -1,7 +1,7 @@
 
-	     Domain Name Server Configuration Utilities -- NSC 2.1
+	     Domain Name Server Configuration Utilities -- NSC 2.2
 
-		       (c) 1998 Martin Mares <mj@ucw.cz>
+		    (c) 1997--1999 Martin Mares <mj@ucw.cz>
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -39,6 +39,11 @@ GNU General Public License. See file COPYING in any of the GNU utility archives
 
 	- Enjoy your new DNS setup. If everything goes OK, be happy. Else
 	  write a bug report :-)
+
+   An interesting companion to this program is the Sleuth utility which checks
+consistency of DNS zones. It's written in perl with help of the DNS module,
+knows of more errors than other checkers and it's freely available at
+ftp://atrey.karlin.mff.cuni.cz/pub/local/mj/net/sleuth-1.0.tar.gz.
 
 
 2. The Domain List File
@@ -174,3 +179,9 @@ chkdom		Checks domains for correctness using the 'host' utility
 		(check ftp://ftp.nikhef.nl/pub/network for latest version).
 		Use chkdom <domain> <NS> to check specific domain or no
 		parameters to check all domains mentioned in cf/domains.
+		It's even better to use the Sleuth script mentioned in
+		the introduction.
+
+convert		A simple perl script for conversion of zone files to NSC
+		domain files. Requires the DNS module (available from CPAN at
+		ftp.cpan.org).
