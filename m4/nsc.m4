@@ -49,7 +49,7 @@ define(emit_name, `ifdef(`keep_addr', `keep_addr`'undefine(`keep_addr')', `$1')'
 
 define(DO_SOA, `divert; Primary file for the whole_domain domain generated on curdate
 
-corr_dot(whole_domain)	`SOA'	corr_dot(nsname) maintname (
+whole_domain.	`SOA'	corr_dot(nsname) maintname (
 		version refresh retry expire minttl )')
 define(SOA, `ifdef(`Xdomain',`define(`Xdomain',$1)',`define(`Xdomain',$1)DO_SOA')')
 
