@@ -6,9 +6,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
    NSC is a set of shell and M4 scripts for easy maintenance of all domain name
-server files. It requires BIND 8.X, GNU bash and GNU m4 to be installed on the
-system. All programs have been tested on Linux, but should work on all unices
-assuming the required packages are present.
+server files (including configuration and zone files). It requires BIND 8.X,
+GNU bash and GNU m4 to be installed on the system. All programs have been
+tested on Linux, but should work on all unices assuming the required packages
+are present.
 
    The whole program can be used and distributed according to the terms of the
 GNU General Public License. See file COPYING in any of the GNU utility archives
