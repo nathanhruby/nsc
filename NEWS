@@ -1,3 +1,10 @@
+Version 3.0  [20-02-2005]
+
+  One year of testing should be good enough, so releasing 2.99b as 3.0
+  with almost no changes. The only one is:
+
+  o  ZONE_OPTIONS macro added, allowing to add custom options to zones.
+
 Version 2.99b  [21-12-2003]
 
   This version has been almost rewritten from scratch. The syntax

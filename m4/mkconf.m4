@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- BIND Config File Builder
-dnl ### (c) 1997--2003 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2005 Martin Mares <mj@ucw.cz>
 dnl ###
 include(m4/dnslib.m4)
 
@@ -9,6 +9,7 @@ include(m4/dnslib.m4)
 define(`DO_PRIMARY', `divert(0)zone "$1" in {
 	type master;
 	file "ZONEDIR/nsc_file_name($2)";
+ZZ_OPTIONS()dnl
 };
 
 divert(-1)')
@@ -22,6 +23,7 @@ define(`SECONDARY', `divert(0)zone "$1" in {
 	type slave;
 	file "BAKDIR/nsc_file_name($1)";
 	masters { $2; };
+ZZ_OPTIONS()dnl
 };
 
 divert(-1)')
@@ -42,6 +44,12 @@ divert(-1)')
 
 define(`CONFIG', `divert(0)$1
 divert(-1)')
+
+# Setting domain options
+
+define(`ZZ_OPTIONS', `')
+
+define(`ZONE_OPTIONS', `define(`ZZ_OPTIONS', ifelse(`$1',`',`',``	$1''))')
 
 # The preamble
 

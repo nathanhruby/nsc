@@ -1,15 +1,15 @@
 
-	     Domain Name Server Configuration Utilities -- NSC 2.99b
+	     Domain Name Server Configuration Utilities -- NSC 3.0
 
-		    (c) 1997--2003 Martin Mares <mj@ucw.cz>
+		    (c) 1997--2005 Martin Mares <mj@ucw.cz>
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 ------------------------------------------------------------------------------------
-WARNING: This is a prerelease of the NSC 3.0. See NEWS for the list of changes.
-Most importantly, the configuration files are NOT compatible with the old releases.
-Also, it hasn't undergone much extensive testing yet, so there might be bugs around.
+WARNING: NSC has undergone significant changes between versions 2.3 and 2.99b.
+See NEWS for the summary of changes. Most importantly, the configuration files are
+NOT compatible with the old releases.
 ------------------------------------------------------------------------------------
 
 
@@ -136,9 +136,19 @@ REVERSE(network, primary-files...)
 		You can also use the REV macro explicitly, which can be handy
 		for example in SECONDARY declarations.
 
-CONFIG(...)	- insert user data to named.conf
+ZONE_OPTIONS(`options;
+	more options;
+')
+		Define options to be inserted to all subsequent zone declarations
+		until the next ZONE_OPTIONS command. Please keep in mind that the
+		semicolon character act as M4 comment, so you need to put the
+		closing quote at a separate line. See our example cf/domains.
 
-MAKEFILE(...)	- insert user data to Makefile
+CONFIG(...)
+		Insert user data to named.conf, again beware of semicolons.
+
+MAKEFILE(...)
+		Insert user data to Makefile.
 
 
 3. The Domain Files
@@ -437,5 +447,3 @@ chkdel		A simple Perl script for checking of domain delegations --
 		it checks all PRIMARY and SECONDARY records in cf/domains
 		against NS records. Requires the Net::DNS module and also
 		some tweaking of parameters at the top of the script.
-
- LocalWords:  MINTTL NSNAME hostname MAINTNAME

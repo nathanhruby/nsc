@@ -15,6 +15,17 @@ PRIMARY(example.com)
 PRIMARY(a.example.com)
 SECONDARY(b.example.com, 10.0.0.1)
 
+; Yet another subdomain residing on another server, but this time with
+; access restricted to the internal network. The closing quote after the
+; options has to be on a separate line, because semicolon is a comment character.
+
+ZONE_OPTIONS(`allow-query { 127.0.0.0/8; 10.0.0.0/8; };
+	allow-recursion { 127.0.0.0/8; 10.0.0.0/8; };
+	allow-transfer { 127.0.0.0/8; 10.0.0.0/8; };
+')
+SECONDARY(priv.example.com, 10.10.10.1)
+ZONE_OPTIONS()
+
 ; Here are reverse delegations for two networks. NSC automatically creates
 ; the PTR records from A records in all mentioned zones. See cf/{0,1}.0.10.
 
