@@ -2,10 +2,8 @@
 #
 #	Convert -- A Tool for Conversion of Zone Files to NSC Format
 #
-#	(c) 1999 Martin Mares <mj@ucw.cz>
+#	(c) 1999--2003 Martin Mares <mj@ucw.cz>
 #
-
-use lib "/home/mj/perl/lib/site_perl";
 
 use Getopt::Std;
 use Net::DNS::Resolver;
@@ -71,7 +69,7 @@ sub go {
 	my $flag = shift @_;
 
 	if (defined $ips{$n}) { print "H($n$ips{$n})\n"; }
-	elsif ($flag) { print "HH($n)\n"; }
+	elsif ($flag) { print "H($n)\n"; }
 	if (defined $mx{$n}) { print "MX($mx{$n})\n"; }
 	if (defined $cn{$n}) { print "ALIAS($cn{$n})\n"; }
 }
