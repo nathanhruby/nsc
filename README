@@ -1,9 +1,17 @@
 
-	     Domain Name Server Configuration Utilities -- NSC 2.3
+	     Domain Name Server Configuration Utilities -- NSC 3.0
 
-		    (c) 1997--2001 Martin Mares <mj@ucw.cz>
+		    (c) 1997--2003 Martin Mares <mj@ucw.cz>
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#### BIG FAT WARNING ####
+
+NSC 3.0 is close to having been rewritten from scratch. However, the documentation
+has not been updated yet, only the example configs in cf/* were.
+
+#### BIG FAT END OF WARNING ####
+
 
    NSC is a set of shell and M4 scripts for easy maintenance of all domain name
 server files (including configuration and zone files). It requires BIND 8.X,
