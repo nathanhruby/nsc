@@ -1,9 +1,2 @@
-DOC: mention namespaces
-DOC: mention trailing dot rules
-DOC: section xrefs
-
-Update the utilities
-
 freebsd: don't use `-f' in hostname
-
-? if a zone doesn't change, don't bump the version
+if a zone doesn't change, don't bump the version

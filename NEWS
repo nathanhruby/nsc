@@ -1,3 +1,18 @@
+Version 2.99b  [21-12-2003]
+
+  This version has been almost rewritten from scratch. The syntax
+  of configuration files is incompatible with the previous versions,
+  please read the README again.
+
+  Most important changes:
+
+  o  Support for IPv6.
+  o  Much better configuration of classless reverse delegations.
+  o  Better documentation and well-commented example files.
+  o  The "chkdom" script is gone, use the DNS Sleuth instead.
+  o  Cleaned up names of all macros, the namespaces are now clearly
+     defined.
+
 Version 2.3  [27-06-2001]
 
   o  Global parameters (hostmaster mail address etc.) can be set
