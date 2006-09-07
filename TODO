@@ -1,2 +1,5 @@
 freebsd: don't use `-f' in hostname
 if a zone doesn't change, don't bump the version
+
+BIND9: options
+BIND9: `bak' must be owned by the bind user
