@@ -31,9 +31,9 @@ divert(-1)')
 # Definition of forwarders for both normal and slave mode
 
 define(`FORWard', `patsubst(`$*',`,',`; ')')
-define(`FORWArd', `divert(0)	forward $1;
+define(`FORWArd', `	forward $1;
 	forwarders { FORWard(shift($@),)};
-divert(-1)')
+')
 
 define(`FORWARD', `FORWArd(first, $@)')
 define(`SLAVE', `FORWArd(only, $@)')
