@@ -1,14 +1,14 @@
 Begin3
 Title:          Name Server Configurator
-Version:        3.0
-Entered-date:   050220
+Version:        3.0.1
+Entered-date:   061122
 Description:    Set of utilities and M4 scripts for easy maintenance of
 		DNS zone files and also automatic generation of BIND 8/9 configuration
 		files. Requires GNU m4 and a Posix-compatible shell.
 Keywords:       named, bind, dns
 Author:         mj@ucw.cz (Martin Mares)
 Maintained-by:  mj@ucw.cz (Martin Mares)
-Primary-site:   atrey.karlin.mff.cuni.cz pub/local/mj/net/nsc-3.0.tar.gz
-Alternate-site: metalab.unc.edu pub/Linux/system/network/management/nsc-3.0.tar.gz
+Primary-site:   atrey.karlin.mff.cuni.cz pub/local/mj/net/nsc-3.0.1.tar.gz
+Alternate-site: metalab.unc.edu pub/Linux/system/network/management/nsc-3.0.1.tar.gz
 Copying-policy: GPL
 End
