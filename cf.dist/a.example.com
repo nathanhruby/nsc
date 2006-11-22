@@ -24,3 +24,6 @@ DADDR(jabb)
 
 H(jabberwock, jabb)
 H(this-one-is-classless-reverse-delegated, 10.3.0.65)
+
+undefine(`dnl')
+H(dnl, jabb)

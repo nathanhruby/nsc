@@ -1,3 +1,8 @@
+Version 3.0.1  [22-11-2006]
+
+  Fixed a minor bug in the FORWARD and SLAVE macros, causing it to
+  generate bogus output with certain versions of M4.
+
 Version 3.0  [20-02-2005]
 
   One year of testing should be good enough, so releasing 2.99b as 3.0

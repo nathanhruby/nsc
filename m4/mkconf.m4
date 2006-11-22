@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- BIND Config File Builder
-dnl ### (c) 1997--2005 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2006 Martin Mares <mj@ucw.cz>
 dnl ###
 include(m4/dnslib.m4)
 
@@ -30,7 +30,7 @@ divert(-1)')
 
 # Definition of forwarders for both normal and slave mode
 
-define(`FORWard', `patsubst(`$@',`,',`; ')')
+define(`FORWard', `patsubst(`$*',`,',`; ')')
 define(`FORWArd', `divert(0)	forward $1;
 	forwarders { FORWard(shift($@),)};
 divert(-1)')
