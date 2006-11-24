@@ -1,8 +1,5 @@
 ; Domain file for ucw.cz by MJ
 
-define(`jabip', `81.31.5.130')
-define(`ucwmx', `0 jabberwock')
-
 SOA(ucw.cz)
 NS(jabberwock.ucw.cz,drak.ucw.cz,ns.parcon.cz)
 MX(ucwmx, 10 drak)
@@ -11,31 +8,32 @@ DADDR(jabip)
 ; Jabberwock, connected to CECOM
 H(jabberwock, jabip)
 MX(ucwmx)
-ALIAS(lariat,www,ftp,vrr,cvs)
+ALIAS(www, ftp, cvs, git, mbox, smtp)
+ALIAS(vrr, pci-ids)
+ALIAS(mj)
+ALIAS(sechtl-vosecek, 3color)
+ALIAS(tanahonza)
+
+; IP space routed to Jabberwock: 0-15
+; Firewall traversal service
+H(iceberg, 89.250.246.5)
+
+; Old IP address of Jabberwock
+H(jw-old, 81.31.5.130)
 
 ; MJ's home network
-H(albireo, 81.27.194.19)
+H(albireo, 84.242.87.5)
 MX(ucwmx)
+
+H(bearpaw, 88.208.93.65)
+
+D(burrow)
+NS(albireo)
 
 the.name.of.my.computer.is.longer.than.the.name.of.your.computers.isnt.it	`CNAME'	albireo
 
-; Pavel <pavel@ucw.cz>
-H(elf)
-MX(ucwmx)
-
-H(bug)
-MX(ucwmx)
-
-; Dan <0rfelyus@ucw.cz>
-H(hobitin)
-MX(ucwmx)
-CNAME(stopari, jabberwock)
-
 ; Vojta <vojtech@ucw.cz>
-H(twilight, 81.30.235.3)
-MX(0 twilight.ucw.cz, 10 twilight-upc.ucw.cz, 100 jabberwock.ucw.cz)
-
-H(twilight-upc, 62.245.75.237)
+CNAME(twilight, s254.chello.upc.cz)
 
 DH(m-v, jabip)
 MX(ucwmx)
@@ -44,16 +42,27 @@ ALIAS(www.m-v)
 DH(lakarie, jabip)
 MX(ucwmx)
 
-; Erik Hamera <hamerae@cs.felk.cvut.cz>
-H(kanal, 62.24.67.123)
-MX(0 kanal)
-H(mamutik, 62.24.67.72)
+; Dan <0rfelyus@ucw.cz>
+H(hobitin)
+MX(ucwmx)
+CNAME(stopari, jabberwock)
+
+; Tom Valla <tom@ucw.cz>
+H(hal9000, 193.165.12.73)
+
+; Erik Hamera <hamerae@cs.felk.cvut.cz> <yokotashi@mailcan.com>
+CNAME(kanal, rattus.mine.nu)
+H(mamutik, 213.220.221.244)
 
 ; Johanka <johanka@ucw.cz>
 H(arc, 195.39.17.251)
+CNAME(mad, jabberwock)
 
 ; Mafi <mafi@ucw.cz>
-CNAME(mafi, ns1.foo.cz)
+CNAME(mafi, mafi.tucnacek.org)
+
+; Radek Doulik <rodo@ucw.cz>, old web site
+CNAME(rodo, jabberwock)
 
 ; Drak <goran@ucw.cz>
 ; (we're a secondary for Drak, so glue record is not needed)

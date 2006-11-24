@@ -1,4 +1,4 @@
 SOA(martin.mares.name)
 NS(jabberwock.ucw.cz,drak.ucw.cz)
 MX(0 jabberwock.ucw.cz)
-DADDR(81.31.5.130)
+DADDR(jabip)

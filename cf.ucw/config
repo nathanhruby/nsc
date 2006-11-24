@@ -1,1 +1,6 @@
 ; User configuration of the NSC
+
+define(`NAMED_RESTART_CMD', `rndc reload')
+
+define(`jabip', `89.250.246.4')
+define(`ucwmx', `0 jabberwock')
