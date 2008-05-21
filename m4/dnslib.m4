@@ -1,12 +1,12 @@
 dnl ###
-dnl ### NSC 3.0 -- Library Functions For DNS Processing
-dnl ### (c) 1997--2003 Martin Mares <mj@ucw.cz>
+dnl ### NSC -- Library Functions For DNS Processing
+dnl ### (c) 1997--2008 Martin Mares <mj@ucw.cz>
 dnl ###
 divert(-1)
 
 # NSC version
 
-define(`NSCVER', `NSC 2.99a')
+define(`NSCVER', `NSC 3.1')
 
 # Current date and time
 

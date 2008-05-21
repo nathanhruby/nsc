@@ -1,3 +1,8 @@
+Version 3.1  [21-05-2008]
+
+  o  Fixes for compatibility problems with recent versions of GNU m4.
+  o  Added support for TXT, RP and SRV records.
+
 Version 3.0.1  [22-11-2006]
 
   Fixed bugs in in the FORWARD and SLAVE macros, causing it to
