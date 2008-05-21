@@ -119,6 +119,14 @@ define(nsc_ALIAS, `$1	`CNAME' CURRENT_NAME
 ')
 define(ALIAS, `nsc_iterate(`nsc_ALIAS', $@)nsc_set_name(CURRENT_NAME)dnl')
 
+# TXT records
+
+define(TXT, `nsc_emit_name	`TXT'	"$1"')
+
+# RP (responsible person) records
+
+define(RP, `nsc_emit_name	`RP'	nsc_corr_dot($1) nsc_corr_dot($2)')
+
 # CNAME records
 
 define(CNAME, `$1	`CNAME'	nsc_corr_dot($2)')

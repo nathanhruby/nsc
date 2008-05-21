@@ -230,6 +230,15 @@ ALIAS(alias...)
 		Generates a series of CNAME records pointing from the aliases
 		to the current host/domain.
 
+TXT(text)
+		Generate a TXT record for the current host or domain.
+
+RP(mail, txt)
+		Generate a RP (responsible person) record for the current host or domain.
+		The first argument is a mail address in DNS notation (with `@' replaced
+		by `.' as in the SOA record), the second one is a name of a TXT record
+		with contact information.
+
 CNAME(src, dest)
 		Generate a CNAME record -- "src" points to "dest".
 

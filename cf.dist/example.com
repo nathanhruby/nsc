@@ -23,6 +23,15 @@ H(www, 10.0.0.3)
 ALIAS(fairytales, scifi, horror)
 MX(0 mail.example.com)
 
+; Hosts with TXT and RP records
+
+H(c)
+TXT(Once upon a midnight dreary)
+TXT(When I pondered weak and weary)
+
+H(d)
+RP(admin.example.com, c)
+
 ; A subdomain called a.example.com
 
 D(a)
