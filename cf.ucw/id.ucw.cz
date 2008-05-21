@@ -1,0 +1,8 @@
+SOA(id.ucw.cz)
+NS(jabberwock.ucw.cz)
+NS(anxur.fi.muni.cz)
+NS(sinux.sinus.cz)
+NS(ns4.osdn.org.ua)
+NS(ns3.osdn.org.ua)
+
+$INCLUDE "zone/id.ucw.cz.raw"

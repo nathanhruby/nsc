@@ -1,0 +1,9 @@
+SOA(anicka.net)
+NS(jabberwock.ucw.cz, drak.ucw.cz)
+MX(0 jabberwock.ucw.cz, 10 drak.ucw.cz)
+DADDR(jabip)
+
+CNAME(www, jabberwock.ucw.cz)
+CNAME(weblog, jabberwock.ucw.cz)
+CNAME(ftp, jabberwock.ucw.cz)
+CNAME(bublina, jabberwock.ucw.cz)

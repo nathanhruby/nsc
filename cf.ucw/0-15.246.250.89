@@ -1,0 +1,4 @@
+SOA(REV(89.250.246.0-15))
+NS(jabberwock.ucw.cz, server1.trestel.cz, server2.trestel.cz)
+
+REVERSE(89.250.246, 0, 15)
