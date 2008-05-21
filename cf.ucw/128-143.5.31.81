@@ -1,4 +1,0 @@
-SOA(REV(81.31.5.128-143))
-NS(jabberwock.ucw.cz, server1.trestel.cz, server2.trestel.cz)
-
-REVERSE(81.31.5, 128, 143)
