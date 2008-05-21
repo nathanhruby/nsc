@@ -10,27 +10,31 @@ H(jabberwock, jabip)
 MX(ucwmx)
 ALIAS(www, ftp, cvs, git, mbox, smtp)
 ALIAS(vrr, pci-ids)
-ALIAS(mj)
-ALIAS(sechtl-vosecek, 3color)
+ALIAS(mj, fox)
 ALIAS(tanahonza)
 
 ; IP space routed to Jabberwock: 0-15
 ; Firewall traversal service
 H(iceberg, 89.250.246.5)
 
-; Old IP address of Jabberwock
-H(jw-old, 81.31.5.130)
-
 ; MJ's home network
-H(albireo, 84.242.87.5)
+H(bearpaw, 84.242.87.5)
+
+H(albireo, 89.239.2.32)
 MX(ucwmx)
 
-H(bearpaw, 88.208.93.65)
-
 D(burrow)
-NS(albireo)
+NS(bearpaw)
 
 the.name.of.my.computer.is.longer.than.the.name.of.your.computers.isnt.it	`CNAME'	albireo
+
+; The PCI ID database via DNS hack
+H(id)
+NS(jabberwock)
+NS(anxur.fi.muni.cz)
+NS(sinux.sinus.cz)
+NS(ns4.osdn.org.ua)
+NS(ns3.osdn.org.ua)
 
 ; Vojta <vojtech@ucw.cz>
 CNAME(twilight, s254.chello.upc.cz)
@@ -41,6 +45,12 @@ ALIAS(www.m-v)
 
 DH(lakarie, jabip)
 MX(ucwmx)
+
+; Honza <hubicka@ucw.cz>
+DH(sechtl-vosecek, jabip)
+MX(ucwmx)
+
+CNAME(3color, jabberwock)
 
 ; Dan <0rfelyus@ucw.cz>
 H(hobitin)
@@ -63,6 +73,9 @@ CNAME(mafi, mafi.tucnacek.org)
 
 ; Radek Doulik <rodo@ucw.cz>, old web site
 CNAME(rodo, jabberwock)
+
+; Lemming <lemming@ucw.cz>
+CNAME(lemming, jabberwock)
 
 ; Drak <goran@ucw.cz>
 ; (we're a secondary for Drak, so glue record is not needed)
