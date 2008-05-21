@@ -37,8 +37,7 @@ define(nsc_corr_dot, `ifelse(substr($1,decr(len($1))),.,$1,$1`'ifelse(index($1,.
 
 define(nsc_if_v6, `ifelse(index($1,:),-1,`$3',`$2')')
 
-define(nsc_norm_v6, `nsc_norm_v6_z(dnl
-ifelse(regexp($1,`::.*::'),-1,`ifelse(index($1,::),-1,`nsc_norm_v6_nn($1)',`nsc_norm_v6_cc($1)')',`nsc_bad_v6($1)'))')
+define(nsc_norm_v6, `nsc_norm_v6_z(ifelse(regexp($1,`::.*::'),-1,`ifelse(index($1,::),-1,`nsc_norm_v6_nn($1)',`nsc_norm_v6_cc($1)')',`nsc_bad_v6($1)'))')
 # If there is no ::, check the number of :'s
 define(nsc_norm_v6_nn, `ifelse(nsc_extract_colons($1),:::::::,$1,`nsc_bad_v6($1)')')
 # Replace :: by the right number of :'s to get 8 (possibly empty) components
