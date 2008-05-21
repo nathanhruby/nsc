@@ -11,6 +11,16 @@ SOA(example.com)
 NS(ns1.example.com, ns2.example.com)
 MX(0 mail.example.com, 10 smtp.example.net)
 
+; The domain also has its own service record for Jabber, handled by the `mail' machine
+
+SRV(jabber, tcp, 0, 1, 5269, mail)
+SRV(xmpp-server, tcp, 0, 1, 5269, mail)
+SRV(xmpp-client, tcp, 0, 1, 5222, mail)
+
+; Responsible person record (e-mail and reference to textual contact information)
+
+RP(admin.example.com, text)
+
 ; A couple of hosts
 
 H(ns1, 10.0.0.1)
@@ -23,14 +33,11 @@ H(www, 10.0.0.3)
 ALIAS(fairytales, scifi, horror)
 MX(0 mail.example.com)
 
-; Hosts with TXT and RP records
+; TXT record
 
-H(c)
+H(text)
 TXT(Once upon a midnight dreary)
 TXT(When I pondered weak and weary)
-
-H(d)
-RP(admin.example.com, c)
 
 ; A subdomain called a.example.com
 

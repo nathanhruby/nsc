@@ -127,6 +127,10 @@ define(TXT, `nsc_emit_name	`TXT'	"$1"')
 
 define(RP, `nsc_emit_name	`RP'	nsc_corr_dot($1) nsc_corr_dot($2)')
 
+# SRV records
+
+define(SRV, `_`'$1`'._`'$2`'.CURRENT_NAME	`SRV'	$3 $4 $5 nsc_corr_dot($6)`'nsc_set_name(CURRENT_NAME)')
+
 # CNAME records
 
 define(CNAME, `$1	`CNAME'	nsc_corr_dot($2)')
