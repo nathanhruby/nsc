@@ -1,8 +1,8 @@
 dnl ###
 dnl ### NSC -- Zone File Generator
-dnl ### (c) 1997--2003 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2008 Martin Mares <mj@ucw.cz>
 dnl ###
-dnl ### Usage: m4 nsc.m4 domain-source-files >zone-file -DVERS=path-to-version-file
+dnl ### Usage: m4 -DVERS=path-to-version-file nsc.m4 domain-source-files >zone-file
 dnl ###
 include(m4/dnslib.m4)
 

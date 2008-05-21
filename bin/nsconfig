@@ -1,6 +1,6 @@
 #!/bin/sh
 # NSC -- Makefile & Config file build script
-# (c) 1997--2003 Martin Mares <mj@ucw.cz>
+# (c) 1997--2008 Martin Mares <mj@ucw.cz>
 
 set -e
 
@@ -13,4 +13,4 @@ if [ ! -f $DOMAINS ] ; then
 	fi
 
 $M4 m4/mkconf.m4 $DOMAINS >named.conf
-$M4 m4/mkmf.m4 $DOMAINS >Makefile -DM4=$M4
+$M4 -DM4=$M4 m4/mkmf.m4 $DOMAINS >Makefile

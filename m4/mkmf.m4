@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- Makefile Builder
-dnl ### (c) 1997--2003 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2008 Martin Mares <mj@ucw.cz>
 dnl ###
 include(m4/dnslib.m4)
 
@@ -11,7 +11,7 @@ define(`PRIMARIES', `')
 define(`nsc_prepend_cf_one', ` 'CFDIR/`nsc_file_name($1)')
 define(`nsc_prepend_cf_multi', `nsc_iterate(`nsc_prepend_cf_one', $@)')
 define(`PRIMARY', `divert(0)ZONEDIR/nsc_file_name($1):nsc_prepend_cf_multi($@) $(DDEPS)
-	`$'(NSC)nsc_prepend_cf_multi($@) >ZONEDIR/nsc_file_name($1) -DVERS=VERSDIR/nsc_file_name($1)
+	`$'(`M4') -DVERS=VERSDIR/nsc_file_name($1) `$'(NSC)nsc_prepend_cf_multi($@) >ZONEDIR/nsc_file_name($1)
 
 divert(-1)
 define(`PRIMARIES', PRIMARIES ZONEDIR/nsc_file_name($1))
@@ -31,13 +31,13 @@ define(`nsc_cleanup', `divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMA
 	touch VERSDIR/.version
 
 clean:
-	find BAKDIR ZONEDIR -type f -maxdepth 1 | xargs rm -f
+	find BAKDIR ZONEDIR -maxdepth 1 -type f | xargs rm -f
 
 clobber: clean
 	rm -f Makefile named.conf
 
 distclean: clobber
-	find VERSDIR -type f -maxdepth 1 | xargs rm -f
+	find VERSDIR -maxdepth 1 -type f | xargs rm -f
 ')
 
 divert(0)dnl
@@ -48,8 +48,8 @@ divert(0)dnl
 `#'
 
 `M4'=M4
-NSC=$(`M4') m4/nsc.m4
-DDEPS=m4/nsc.m4 m4/dnslib.m4 cf/config
+NSC=m4/nsc.m4
+DDEPS=`$'(NSC) m4/dnslib.m4 cf/config
 
 all: VERSDIR/.version
 m4wrap(`nsc_cleanup')
