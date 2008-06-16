@@ -61,3 +61,7 @@ REVERSE(10.3.0.64/26, a.example.com)
 
 PRIMARY(ip6.example.com)
 REVERSE(fec0:1234::/32, ip6.example.com)
+
+; One more: a forward-only zone
+
+FORWARDING(fwd.example.com, 10.0.0.1, 10.0.0.2)

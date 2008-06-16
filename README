@@ -136,6 +136,10 @@ REVERSE(network, primary-files...)
 		You can also use the REV macro explicitly, which can be handy
 		for example in SECONDARY declarations.
 
+FORWARDED(zone, ip...)
+		Define a forwarding zone. All queries are forwarded to the
+		specified name servers.
+
 ZONE_OPTIONS(`options;
 	more options;
 ')

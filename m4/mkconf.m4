@@ -40,6 +40,17 @@ define(`SLAVE', `FORWArd(only, $@)')
 
 divert(-1)')
 
+# Definition of a forwarding zone
+
+define(`FORWARDING', `divert(0)zone "$1" in {
+	type forward;
+	forward only;
+	forwarders { FORWard(shift($@),)};
+ZZ_OPTIONS()dnl
+};
+
+divert(-1)')
+
 # Manual insertion of config file material
 
 define(`CONFIG', `divert(0)$1

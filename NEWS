@@ -1,3 +1,6 @@
+
+  o  Added the FORWARDING macro for generating forward-only zones.
+
 Version 3.1  [21-05-2008]
 
   o  Fixes for compatibility problems with recent versions of GNU m4.
