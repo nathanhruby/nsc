@@ -1,5 +1,7 @@
 
-  o  Added the FORWARDING macro for generating forward-only zones.
+  o  Added FORWARDING macro for generating forward-only zones.
+  o  Added BLACKHOLE macro for blackhole zones as per RFC 6303.
+     Blackhole zones in example cf/domains updated to use this macro.
 
 Version 3.1  [21-05-2008]
 

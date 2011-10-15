@@ -51,6 +51,15 @@ ZZ_OPTIONS()dnl
 
 divert(-1)')
 
+# Blackhole zones
+
+define(`BLACKHOLE', `divert(0)zone "$1" in {
+	type master;
+	file "cf/blackhole";
+};
+
+divert(-1)')
+
 # Manual insertion of config file material
 
 define(`CONFIG', `divert(0)$1

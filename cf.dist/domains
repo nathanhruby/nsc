@@ -2,9 +2,29 @@
 
 ; Various mandatory things required by RFC 1912, section 4.1
 PRIMARY(localhost)
-REVERSE(0)
-REVERSE(255)
 REVERSE(127.0.0, localhost)
+
+; Blackhole zones recommended by RFC 6303
+BLACKHOLE(REV(0))			; IPv4 reserved net
+BLACKHOLE(REV(127))			; IPv4 loopback net
+BLACKHOLE(REV(169.254))			; IPv4 link-local
+BLACKHOLE(REV(192.0.2))			; IPv4 test
+BLACKHOLE(REV(198.51.100))		; IPv4 test
+BLACKHOLE(REV(203.0.113))		; IPv4 test
+BLACKHOLE(REV(255.255.255.255))		; IPv4 broadcast
+BLACKHOLE(REV(::1/128))			; IPv6 loopback
+BLACKHOLE(REV(::0/128))			; IPv6 unspecified
+BLACKHOLE(REV(fd00::/8))		; IPv6 locally assigned
+BLACKHOLE(REV(fe80::/12))		; IPv6 link-local
+BLACKHOLE(REV(fe90::/12))
+BLACKHOLE(REV(fea0::/12))
+BLACKHOLE(REV(feb0::/12))
+BLACKHOLE(REV(2001:0db8::/32))		; IPv6 example prefix
+
+; Blackhole zones for site-local addresses recommended by RFC 6303
+BLACKHOLE(REV(10))
+nsc_forloop(`i', 16, 31, `BLACKHOLE(REV(172.i))')
+BLACKHOLE(REV(192.168))
 
 ; A pretty normal example domain (we act as a primary nameserver for it)
 

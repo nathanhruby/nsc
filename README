@@ -109,6 +109,9 @@ PRIMARY(zone, [extra-files...])
 		concatenated to produce a single configuration). See the next
 		section for a look inside these files.
 
+		When the zone name contains a slash (as happens in classless
+		reverse zones), it is replaced by "@" in the cf file name.
+
 SECONDARY(zone, primary)
 		Define a zone we run a secondary name server for.
 		"primary" is an IP address of the primary name server.
@@ -139,6 +142,12 @@ REVERSE(network, primary-files...)
 FORWARDED(zone, ip...)
 		Define a forwarding zone. All queries are forwarded to the
 		specified name servers.
+
+BLACKHOLE(zone)
+		Define an empty zone according to RFC 6303. This is usually done
+		for zones for which clients are known to erroneously ask queries
+		(e.g., reverse resolving of link-local addresses). The contents
+		served for these zones is taken from cf/blackhole.
 
 ZONE_OPTIONS(`options;
 	more options;
