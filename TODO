@@ -3,5 +3,3 @@ if a zone doesn't change, don't bump the version
 
 BIND9: options
 BIND9: `bak' must be owned by the bind user
-
-empty zone for 254.169.in-addr.arpa. (RFC 3927)
