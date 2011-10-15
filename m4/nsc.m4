@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- Zone File Generator
-dnl ### (c) 1997--2008 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2011 Martin Mares <mj@ucw.cz>
 dnl ###
 dnl ### Usage: m4 -DVERS=path-to-version-file nsc.m4 domain-source-files >zone-file
 dnl ###
@@ -8,7 +8,7 @@ include(m4/dnslib.m4)
 
 # Version number
 
-ifdef(`VERS',`',`nsc_fatal_error(`VERS macro not defined')')
+ifdef(`VERS',`
 
 define(TODAY_CODE, translit(esyscmd(`date +"%Y%m%d"'),`
 ',`'))
@@ -20,6 +20,10 @@ ifelse(TODAY_CODE, LAST_TODAY_CODE, `', `define(`SUBVER_NUM',1)')
 syscmd(echo >VERS "`define'(`LAST_TODAY_CODE',TODAY_CODE) `define'(`SUBVER_NUM',incr(SUBVER_NUM))")
 ifelse(eval(SUBVER_NUM > 99),1,`nsc_fatal_error(`Too many zone changes in a single day, you must tweak 'VERS` manually')')
 define(`VERSION',TODAY_CODE`'format(`%02d', SUBVER_NUM))
+
+',`
+define(`VERSION', 1)
+')
 
 # Record names
 

@@ -19,6 +19,8 @@ define(`PRIMARIES', PRIMARIES ZONEDIR/nsc_file_name($1))
 
 define(`REVERSE', `PRIMARY(nsc_if_v6($1,`nsc_revblock6($1)',`nsc_revaddr($1)'), shift($@))')
 
+define(`BLACKHOLE', `define(`NEED_BLACKHOLE', 1)')
+
 # Insertion of raw makefile material
 
 define(`MAKEFILE', `divert(0)$1
@@ -26,9 +28,13 @@ divert(-1)')
 
 # Last words
 
-define(`nsc_cleanup', `divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES
+define(`nsc_cleanup', `divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES`'ifdef(`NEED_BLACKHOLE',` ZONEDIR/blackhole')
 	NAMED_RESTART_CMD
 	touch VERSDIR/.version
+ifdef(`NEED_BLACKHOLE', `
+ZONEDIR/blackhole: CFDIR/blackhole $(DDEPS)
+	`$'(`M4') $(NSC) $< >`$'@
+')dnl
 
 clean:
 	find BAKDIR ZONEDIR -maxdepth 1 -type f | xargs rm -f
