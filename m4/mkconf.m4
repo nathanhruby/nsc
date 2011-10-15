@@ -55,7 +55,7 @@ divert(-1)')
 
 define(`BLACKHOLE', `divert(0)zone "$1" in {
 	type master;
-	file "cf/blackhole";
+	file "zone/blackhole";
 };
 
 divert(-1)')
