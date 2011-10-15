@@ -1,0 +1,4 @@
+; Recommended contents of blackhole zones as per RFC 6303
+
+@ 10800 IN SOA @ nobody.invalid. 1 3600 1200 604800 10800
+@ 10800 IN NS @
