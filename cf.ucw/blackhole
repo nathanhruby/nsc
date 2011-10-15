@@ -1,4 +1,7 @@
+divert(0)dnl
 ; Recommended contents of blackhole zones as per RFC 6303
+; However, we need to set the NS record to our address,
+; since otherwise BIND complains.
 
-@ 10800 IN SOA @ nobody.invalid. 1 3600 1200 604800 10800
-@ 10800 IN NS @
+@ 10800 IN SOA NSNAME nobody.invalid. 1 3600 1200 604800 10800
+@ 10800 IN NS NSNAME
