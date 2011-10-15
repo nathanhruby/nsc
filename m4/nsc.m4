@@ -8,7 +8,7 @@ include(m4/dnslib.m4)
 
 # Version number
 
-ifdef(`VERS',`
+ifdef(`VERS',`',`nsc_fatal_error(`VERS macro not defined')')
 
 define(TODAY_CODE, translit(esyscmd(`date +"%Y%m%d"'),`
 ',`'))
@@ -21,10 +21,6 @@ syscmd(echo >VERS "`define'(`LAST_TODAY_CODE',TODAY_CODE) `define'(`SUBVER_NUM',
 ifelse(eval(SUBVER_NUM > 99),1,`nsc_fatal_error(`Too many zone changes in a single day, you must tweak 'VERS` manually')')
 define(`VERSION',TODAY_CODE`'format(`%02d', SUBVER_NUM))
 
-',`
-define(`VERSION', 1)
-')
-
 # Record names
 
 define(nsc_set_name, `define(`CURRENT_NAME', nsc_corr_dot($1))define(`PRINT_NAME', CURRENT_NAME)')
@@ -34,12 +30,12 @@ define(nsc_abs_name, `ifelse(CURRENT_NAME, translit(CURRENT_NAME,.,:), CURRENT_N
 # SOA record
 
 define(nsc_SOA, `
-$ORIGIN CURRENT_DOMAIN
+ifelse(CURRENT_DOMAIN,@,`',$ORIGIN CURRENT_DOMAIN)
 $TTL	MINTTL
 nsc_emit_name	`SOA'	nsc_corr_dot(NSNAME) MAINTNAME (
 		VERSION REFRESH RETRY EXPIRE MINTTL )')
 define(SOA, `ifdef(`CURRENT_DOMAIN',`ifdef(`REVERSE_MODE',,`nsc_fatal_error(`SOA record defined twice')')')dnl
-define(`CURRENT_DOMAIN',$1.)dnl
+define(`CURRENT_DOMAIN',ifelse($1,@,@,$1.))dnl
 nsc_set_name(CURRENT_DOMAIN)dnl
 ifdef(`REVERSE_MODE',,`nsc_SOA')')
 

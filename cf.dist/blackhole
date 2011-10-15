@@ -1,8 +1,13 @@
-define(`DISABLE_LOCALHOST', 1)
-divert(0)dnl
 ; Recommended contents of blackhole zones as per RFC 6303
 ; However, we need to set the NS record to our address,
 ; since otherwise BIND complains.
 
-`@ 10800 IN SOA' NSNAME. nobody.invalid. 1 3600 1200 604800 10800
-`@ 10800 IN NS' NSNAME.
+define(`DISABLE_LOCALHOST', 1)
+define(`MAINTNAME', `nobody.invalid.')
+define(`REFRESH', 3600)
+define(`RETRY', 1200)
+define(`EXPIRE', 604800)
+define(`MINTTL', 10800)
+
+SOA(@)
+NS(NSNAME)

@@ -28,12 +28,12 @@ divert(-1)')
 
 # Last words
 
-define(`nsc_cleanup', `divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES`'ifdef(`NEED_BLACKHOLE',` ZONEDIR/blackhole')
+define(`nsc_cleanup', `
+ifdef(`NEED_BLACKHOLE', `PRIMARY(blackhole)')
+
+divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES`'ifdef(`NEED_BLACKHOLE',` ZONEDIR/blackhole')
 	NAMED_RESTART_CMD
 	touch VERSDIR/.version
-ifdef(`NEED_BLACKHOLE', `
-ZONEDIR/blackhole: CFDIR/blackhole $(DDEPS)
-	`$'(`M4') $(NSC) $< >`$'@
 ')dnl
 
 clean:
