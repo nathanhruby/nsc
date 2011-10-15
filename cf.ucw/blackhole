@@ -1,3 +1,4 @@
+define(`DISABLE_LOCALHOST', 1)
 divert(0)dnl
 ; Recommended contents of blackhole zones as per RFC 6303
 ; However, we need to set the NS record to our address,
