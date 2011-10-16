@@ -3,6 +3,7 @@ dnl ### NSC -- Zone File Generator
 dnl ### (c) 1997--2011 Martin Mares <mj@ucw.cz>
 dnl ###
 dnl ### Usage: m4 -DVERS=path-to-version-file nsc.m4 domain-source-files >zone-file
+dnl ###    or: m4 -DHASHING nsc.m4 domain-source-files | md5sum
 dnl ###
 include(m4/dnslib.m4)
 
