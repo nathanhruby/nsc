@@ -11,7 +11,7 @@ define(`PRIMARIES', `')
 define(`nsc_prepend_cf_one', ` 'CFDIR/`nsc_file_name($1)')
 define(`nsc_prepend_cf_multi', `nsc_iterate(`nsc_prepend_cf_one', $@)')
 define(`PRIMARY', `divert(0)ZONEDIR/nsc_file_name($1):nsc_prepend_cf_multi($@) $(DDEPS)
-	`$'(`M4') -DVERS=VERSDIR/nsc_file_name($1) `$'(NSC)nsc_prepend_cf_multi($@) >ZONEDIR/nsc_file_name($1)
+	@bin/genzone nsc_file_name($1)`'nsc_prepend_cf_multi($@)
 
 divert(-1)
 define(`PRIMARIES', PRIMARIES ZONEDIR/nsc_file_name($1))
@@ -37,10 +37,10 @@ divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES`'ifdef(`NEED_BLACK
 ')dnl
 
 clean:
-	find BAKDIR ZONEDIR -maxdepth 1 -type f | xargs rm -f
+	find BAKDIR ZONEDIR HASHDIR -maxdepth 1 -type f | xargs rm -f
 
 clobber: clean
-	rm -f Makefile named.conf
+	rm -f Makefile named.conf bin/genzone
 
 distclean: clobber
 	find VERSDIR -maxdepth 1 -type f | xargs rm -f
@@ -53,9 +53,7 @@ divert(0)dnl
 `#'	Please don't edit manually
 `#'
 
-`M4'=M4
-NSC=m4/nsc.m4
-DDEPS=`$'(NSC) m4/dnslib.m4 cf/config
+DDEPS=m4/nsc.m4 m4/dnslib.m4 cf/config
 
 all: VERSDIR/.version
 m4wrap(`nsc_cleanup')

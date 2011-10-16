@@ -92,6 +92,7 @@ define(`CFDIR', `cf')
 define(`ZONEDIR', `zone')
 define(`BAKDIR', `bak')
 define(`VERSDIR', `ver')
+define(`HASHDIR', `hash')
 define(`ROOTCACHE', `root.cache')
 
 define(`REFRESH', HOURS(8))
