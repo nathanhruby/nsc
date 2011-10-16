@@ -87,8 +87,6 @@ define(`nsc_fatal_error', `errprint(`NSC error: $1
 
 define(`NAMED_RESTART_CMD', `ndc reload')
 
-define(`BIND_OPTIONS', `	# Other options can be added here via macro `BIND_OPTIONS'')
-
 define(`ROOT', `/etc/named')
 define(`CFDIR', `cf')
 define(`ZONEDIR', `zone')

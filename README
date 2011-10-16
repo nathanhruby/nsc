@@ -331,19 +331,11 @@ MINTTL
 NSNAME			Origin server (default: hostname of your machine)
 MAINTNAME		Domain maintainer name (default: root@NSNAME)
 
-BIND_OPTIONS		Extra options to put to the options { ... } section of named.conf
-
 For the timing parameters, the following shortcuts are available:
 
 HOURS(n)		Convert hours to seconds
 MINUTES(n)		Convert minutes to seconds
 DAYS(n)			Convert days to seconds
-
-For the BIND_OPTIONS, we offer:
-
-FORWARD(ip...)		Try to ask the given name servers first to see if they
-			have the reply cached.
-SLAVE(ip...)		Pass all non-local requests to the given name servers.
 
 
 5. Makefile targets
