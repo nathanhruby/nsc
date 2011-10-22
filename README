@@ -139,6 +139,13 @@ REVERSE(network, primary-files...)
 		You can also use the REV macro explicitly, which can be handy
 		for example in SECONDARY declarations.
 
+ROOTHINT()
+		Insert a definition of hints for reaching root servers into named.conf.
+		This is necessary if you want your DNS server to resolve foreign
+		domains; otherwise, it will only give out authoritative answers
+		for locally defined zones and forward queries. The location of the
+		file with the hints can be set by the ROOTCACHE directive (see below).
+
 FORWARDED(zone, ip...)
 		Define a forwarding zone. All queries are forwarded to the
 		specified name servers.

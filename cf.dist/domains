@@ -1,5 +1,8 @@
 ; An example domain table for the NSC
 
+; Hints how to find root servers
+ROOTHINT()
+
 ; Various mandatory things required by RFC 1912, section 4.1
 PRIMARY(localhost)
 REVERSE(127.0.0, localhost)
