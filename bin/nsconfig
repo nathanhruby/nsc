@@ -12,6 +12,7 @@ if [ ! -f $DOMAINS ] ; then
 	exit 1
 	fi
 
+mkdir -p zone bak hash ver
 $M4 m4/mkconf.m4 $DOMAINS >named.conf
 $M4 m4/mkmf.m4 $DOMAINS >Makefile
 $M4 -DM4=$M4 m4/mkgenzone.m4 >bin/genzone
