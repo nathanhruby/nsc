@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- Library Functions For DNS Processing
-dnl ### (c) 1997--2008 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2011 Martin Mares <mj@ucw.cz>
 dnl ###
 divert(-1)
 

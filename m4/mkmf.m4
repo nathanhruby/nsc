@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- Makefile Builder
-dnl ### (c) 1997--2008 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2011 Martin Mares <mj@ucw.cz>
 dnl ###
 include(m4/dnslib.m4)
 

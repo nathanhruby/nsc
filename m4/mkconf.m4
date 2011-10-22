@@ -1,6 +1,6 @@
 dnl ###
 dnl ### NSC -- BIND Config File Builder
-dnl ### (c) 1997--2006 Martin Mares <mj@ucw.cz>
+dnl ### (c) 1997--2011 Martin Mares <mj@ucw.cz>
 dnl ###
 include(m4/dnslib.m4)
 
