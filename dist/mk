@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+VERSION=4.0
+DIR=nsc-$VERSION
+ARCHIVE=$DIR.tar.gz
+
+git tag v$VERSION
+git push --tags
+
+rm -rf dist/tmp
+mkdir -p dist/tmp
+git archive --format=tar --prefix=$DIR/ HEAD | ( cd dist/tmp && tar xf - )
+
+cd dist/tmp/$DIR
+rm -rf dist cf cf.ucw
+mv cf.dist cf
+cd ..
+tar czvvf $ARCHIVE $DIR
+
+scp $ARCHIVE atrey:~ftp/pub/local/mj/net/
+ssh jw "cd www && bin/release-prog nsc $VERSION"
+mv $ARCHIVE ~/archives/mj/
+
+cd ../..
+#rm -r dist/tmp
