@@ -31,10 +31,10 @@ divert(-1)')
 define(`nsc_cleanup', `
 ifdef(`NEED_BLACKHOLE', `PRIMARY(blackhole)')
 
-divert(0)VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES`'ifdef(`NEED_BLACKHOLE',` ZONEDIR/blackhole')
+divert(0)dnl
+VERSDIR/.version: CFDIR/domains ROOTCACHE`'PRIMARIES`'ifdef(`NEED_BLACKHOLE',` ZONEDIR/blackhole')
 	NAMED_RESTART_CMD
 	touch VERSDIR/.version
-')dnl
 
 clean:
 	find BAKDIR ZONEDIR HASHDIR -maxdepth 1 -type f | xargs rm -f
