@@ -10,7 +10,7 @@ divert(0)dnl
 
 set -e
 Z=`$'1
-shift
+`shift'
 mkdir -p HASHDIR
 CURRENT_HASH=$(M4 -DHASHING m4/nsc.m4 "$@" | md5sum | cut -d " " -f1)
 PREV_HASH=$(if [ -s HASHDIR/$Z ] ; then cat HASHDIR/$Z ; fi)
